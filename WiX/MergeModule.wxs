@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OPC Core Components - COM Proxy/Stub Merge Module
+
+    This merge module packages all 8 OPC COM proxy/stub DLLs with
+    COM self-registration. It can be consumed by any MSI installer
+    to deploy the OPC COM proxy/stub infrastructure.
+
+    Build with: wix build MergeModule.wxs -o MergeModule.msm
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+    <Module Id="OpcComProxyStubs"
+            Guid="E25DF0F2-0F29-47E8-8537-265285ED9757"
+            Language="1033"
+            Version="3.0.0.0">
+
+        <SummaryInformation
+            Description="OPC COM Proxy/Stub Merge Module"
+            Manufacturer="OPC Foundation" />
+
+        <StandardDirectory Id="TARGETDIR">
+        <Directory Id="MergeRedirectFolder">
+
+            <!-- OPC Common Proxy/Stub -->
+            <Component Id="comp_opccomn_ps" Guid="A1B2C3D4-0001-4000-8000-000000000001">
+                <File Id="file_opccomn_ps"
+                      Name="opccomn_ps.dll"
+                      Source="$(var.BinDir)\opccomn_ps.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Data Access Proxy/Stub -->
+            <Component Id="comp_opcproxy" Guid="A1B2C3D4-0002-4000-8000-000000000002">
+                <File Id="file_opcproxy"
+                      Name="opcproxy.dll"
+                      Source="$(var.BinDir)\opcproxy.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Alarms and Events Proxy/Stub -->
+            <Component Id="comp_opc_aeps" Guid="A1B2C3D4-0003-4000-8000-000000000003">
+                <File Id="file_opc_aeps"
+                      Name="opc_aeps.dll"
+                      Source="$(var.BinDir)\opc_aeps.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Batch Proxy/Stub -->
+            <Component Id="comp_opcbc_ps" Guid="A1B2C3D4-0004-4000-8000-000000000004">
+                <File Id="file_opcbc_ps"
+                      Name="opcbc_ps.dll"
+                      Source="$(var.BinDir)\opcbc_ps.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Commands Proxy/Stub -->
+            <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
+                <File Id="file_OpcCmdPs"
+                      Name="OpcCmdPs.dll"
+                      Source="$(var.BinDir)\OpcCmdPs.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Data Exchange Proxy/Stub -->
+            <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
+                <File Id="file_OpcDxPs"
+                      Name="OpcDxPs.dll"
+                      Source="$(var.BinDir)\OpcDxPs.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Historical Data Access Proxy/Stub -->
+            <Component Id="comp_opchda_ps" Guid="A1B2C3D4-0007-4000-8000-000000000007">
+                <File Id="file_opchda_ps"
+                      Name="opchda_ps.dll"
+                      Source="$(var.BinDir)\opchda_ps.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+            <!-- OPC Security Proxy/Stub -->
+            <Component Id="comp_opcsec_ps" Guid="A1B2C3D4-0008-4000-8000-000000000008">
+                <File Id="file_opcsec_ps"
+                      Name="opcsec_ps.dll"
+                      Source="$(var.BinDir)\opcsec_ps.dll"
+                      KeyPath="yes"
+                      SelfRegCost="1" />
+            </Component>
+
+        </Directory>
+        </StandardDirectory>
+
+    </Module>
+
+</Wix>

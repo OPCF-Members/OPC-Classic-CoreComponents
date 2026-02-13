@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OPC Core Components - GUI Installer
+
+    This MSI installer provides a standard Windows Installer GUI for deploying
+    the OPC COM proxy/stub DLLs. It consumes the merge module built from
+    MergeModule.wxs.
+
+    Build with: wix build Installer.wxs -ext WixToolset.UI.wixext -o OpcCoreComponents.msi
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+    <Package Name="OPC Core Components Redistributable"
+             Manufacturer="OPC Foundation"
+             Version="3.0.0.0"
+             UpgradeCode="ABE618F1-0CCE-4F84-9124-65DB0EF16E00"
+             Compressed="yes"
+             InstallerVersion="500"
+             Scope="perMachine">
+
+        <SummaryInformation
+            Description="OPC Core Components Redistributable"
+            Manufacturer="OPC Foundation" />
+
+        <!-- Upgrade handling: remove previous versions, block downgrades -->
+        <MajorUpgrade
+            DowngradeErrorMessage="A newer version of [ProductName] is already installed."
+            Schedule="afterInstallInitialize" />
+
+        <!-- Embed all files in a single cabinet -->
+        <MediaTemplate EmbedCab="yes" />
+
+        <!-- Directory structure -->
+        <StandardDirectory Id="ProgramFilesFolder">
+            <Directory Id="ManufacturerFolder" Name="OPC Foundation">
+                <Directory Id="INSTALLFOLDER" Name="Core Components 3.00">
+                    <Merge Id="OpcComProxyStubs"
+                           Language="1033"
+                           SourceFile="$(var.MsmDir)\MergeModule.msm"
+                           DiskId="1" />
+                </Directory>
+            </Directory>
+        </StandardDirectory>
+
+        <!-- Feature tree -->
+        <Feature Id="Complete"
+                 Title="OPC Core Components"
+                 Description="OPC COM Proxy/Stub DLLs for DCOM communication."
+                 Level="1"
+                 AllowAbsent="no">
+            <MergeRef Id="OpcComProxyStubs" />
+        </Feature>
+
+        <!-- WixUI dialog set: provides Welcome, License, Install Dir, and Progress dialogs -->
+        <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+
+        <!-- License agreement shown in the installer -->
+        <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+
+    </Package>
+
+</Wix>
