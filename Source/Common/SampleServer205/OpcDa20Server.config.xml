@@ -1,0 +1,1074 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Server xmlns="http://schemas.opcfoundation.org/OPCSample/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" AllowEveryoneAccess="true" ServerWrapper="false">
+  <BrowseElement ElementName="Static">
+    <Children>
+      <BrowseElement ElementName="Analog Types">
+        <Children>
+          <BrowseElement ElementName="Int">
+            <Item>
+              <Value xsi:type="xsd:int">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+              <Property PropertyID="5000" xsi:type="xsd:string">Red</Property>
+              <Property PropertyID="5001" xsi:type="xsd:unsignedInt">0</Property>
+              <Property PropertyID="5002" xsi:type="xsd:dateTime">2000-01-01T12:00:00+01:00</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double">
+            <Item>
+              <Value xsi:type="xsd:double">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">100</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+              <Property PropertyID="5000" xsi:type="xsd:string">Blue</Property>
+              <Property PropertyID="5001" xsi:type="xsd:unsignedInt">0</Property>
+              <Property PropertyID="5002" xsi:type="xsd:dateTime">2000-01-01T12:00:00+01:00</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Int[]">
+            <Item>
+              <Value xsi:type="ArrayOfInt">
+                <Element>-4096</Element>
+                <Element>0</Element>
+                <Element>+4096</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">4096</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">-4096</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double[]">
+            <Item>
+              <Value xsi:type="ArrayOfDouble">
+                <Element>-1000</Element>
+                <Element>0</Element>
+                <Element>+1000</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">-1000</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="Limited Access">
+        <Children>
+          <BrowseElement ElementName="Read Only 1">
+            <Item>
+              <Value xsi:type="xsd:int">50000</Value>
+              <Property PropertyID="5" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Read Only 2">
+            <Item>
+              <Value xsi:type="xsd:double">50000</Value>
+              <Property PropertyID="5" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Write Only 1">
+            <Item>
+              <Value xsi:type="xsd:int">50000</Value>
+              <Property PropertyID="5" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Write Only 2">
+            <Item>
+              <Value xsi:type="xsd:double">50000</Value>
+              <Property PropertyID="5" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="Simple Types">
+        <Children>
+          <BrowseElement ElementName="SByte">
+            <Item>
+              <Value xsi:type="xsd:byte">127</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Byte">
+            <Item>
+              <Value xsi:type="xsd:unsignedByte">255</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Short">
+            <Item>
+              <Value xsi:type="xsd:short">32767</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="UShort">
+            <Item>
+              <Value xsi:type="xsd:unsignedShort">65535</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Int">
+            <Item>
+              <Value xsi:type="xsd:int">2147483647</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="UInt">
+            <Item>
+              <Value xsi:type="xsd:unsignedInt">4294967295</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Long">
+            <Item>
+              <Value xsi:type="xsd:long">9223372036854775807</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="ULong">
+            <Item>
+              <Value xsi:type="xsd:unsignedLong">18446744073709551615</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Float">
+            <Item>
+              <Value xsi:type="xsd:float">+3.402823e38</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double">
+            <Item>
+              <Value xsi:type="xsd:double">1.7976931348623158e+308</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Decimal">
+            <Item>
+              <Value xsi:type="xsd:decimal">922337203685477.5807</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="DateTime">
+            <Item>
+              <Value xsi:type="xsd:dateTime">2002-04-29T06:42:49.0712500Z</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Boolean">
+            <Item>
+              <Value xsi:type="xsd:boolean">true</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="String">
+            <Item>
+              <Value xsi:type="xsd:string">Hello&lt;&gt;World</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="ArrayTypes">
+        <Children>
+          <BrowseElement ElementName="SByte[]">
+            <Item>
+              <Value xsi:type="ArrayOfByte">
+                <Element>-128</Element>
+                <Element>0</Element>
+                <Element>127</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Byte[]">
+            <Item>
+              <Value xsi:type="ArrayOfUnsignedByte">
+                <Element>0</Element>
+                <Element>127</Element>
+                <Element>255</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Short[]">
+            <Item>
+              <Value xsi:type="ArrayOfShort">
+                <Element>-32768</Element>
+                <Element>0</Element>
+                <Element>+32767</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="UShort[]">
+            <Item>
+              <Value xsi:type="ArrayOfUnsignedShort">
+                <Element>0</Element>
+                <Element>32768</Element>
+                <Element>65535</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Int[]">
+            <Item>
+              <Value xsi:type="ArrayOfInt">
+                <Element>-2147483648</Element>
+                <Element>0</Element>
+                <Element>+2147483647</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="UInt[]">
+            <Item>
+              <Value xsi:type="ArrayOfUnsignedInt">
+                <Element>0</Element>
+                <Element>2147483648</Element>
+                <Element>4294967295</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Long[]">
+            <Item>
+              <Value xsi:type="ArrayOfLong">
+                <Element>-9223372036854775807</Element>
+                <Element>0</Element>
+                <Element>+9223372036854775807</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="ULong[]">
+            <Item>
+              <Value xsi:type="ArrayOfUnsignedLong">
+                <Element>0</Element>
+                <Element>9223372036854775808</Element>
+                <Element>18446744073709551615</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Float[]">
+            <Item>
+              <Value xsi:type="ArrayOfFloat">
+                <Element>-1.175494351e-38</Element>
+                <Element>-1.192092896e-07</Element>
+                <Element>+1.192092896e-07</Element>
+                <Element>+3.402823466e+38</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double[]">
+            <Item>
+              <Value xsi:type="ArrayOfDouble">
+                <Element>-2.2250738585072014e-308</Element>
+                <Element>-2.2204460492503131e-016</Element>
+                <Element>+2.2204460492503131e-016</Element>
+                <Element>+1.7976931348623158e+308</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Decimal[]">
+            <Item>
+              <Value xsi:type="ArrayOfDecimal">
+                <Element>-922337203685477.5807</Element>
+                <Element>-1.0001</Element>
+                <Element>+1.0001</Element>
+                <Element>+922337203685477.5807</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Boolean[]">
+            <Item>
+              <Value xsi:type="ArrayOfBoolean">
+                <Element>false</Element>
+                <Element>true</Element>
+                <Element>1</Element>
+                <Element>0</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="String[]">
+            <Item>
+              <Value xsi:type="ArrayOfString">
+                <Element>To be, or not to be: that is the question:</Element>
+                <Element>Whether 'tis nobler in the mind to suffer</Element>
+                <Element>The slings and arrows of outrageous fortune,</Element>
+                <Element>Or to take arms against a sea of troubles,</Element>
+                <Element>And by opposing end them? To die: to sleep;</Element>
+                <Element>No more; and by a sleep to say we end</Element>
+                <Element>The heart-ache and the thousand natural shocks</Element>
+                <Element>That flesh is heir to, 'tis a consummation</Element>
+                <Element>Devoutly to be wish'd. To die, to sleep;</Element>
+                <Element>To sleep: perchance to dream: ay, there's the rub;</Element>
+                <Element>For in that sleep of death what dreams may come?</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="DateTime[]">
+            <Item>
+              <Value xsi:type="ArrayOfDateTime">
+                <Element>1601-01-01T00:00:00Z</Element>
+                <Element>2000-01-01T12:00:00+01:00</Element>
+                <Element>2000-01-01T12:00:00-01:00</Element>
+                <Element>2100-12-31T23:59:59.999999Z</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Object[]">
+            <Item>
+              <Value xsi:type="ArrayOfAnyType">
+                <Element xsi:type="xsd:byte">127</Element>
+                <Element xsi:type="xsd:unsignedByte">255</Element>
+                <Element xsi:type="xsd:string">Hello&lt;&gt;World</Element>
+                <Element xsi:type="ArrayOfInt">
+                  <Element>-2147483648</Element>
+                  <Element>0</Element>
+                  <Element>+2147483647</Element>
+                </Element>
+                <Element xsi:type="ArrayOfAnyType">
+                  <Element xsi:type="xsd:byte">127</Element>
+                  <Element xsi:type="xsd:unsignedByte">255</Element>
+                  <Element xsi:type="xsd:string">Hello&lt;&gt;World</Element>
+                  <Element xsi:type="ArrayOfInt">
+                    <Element>-2147483648</Element>
+                    <Element>0</Element>
+                    <Element>+2147483647</Element>
+                  </Element>
+                </Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="Enumerated Types">
+        <Children>
+          <BrowseElement ElementName="Gems">
+            <Item>
+              <Value xsi:type="xsd:int">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="8" xsi:type="ArrayOfString">
+                <Element>Ruby</Element>
+                <Element>Diamond</Element>
+                <Element>Emerald</Element>
+                <Element>Opal</Element>
+                <Element>Garnet</Element>
+                <Element>Topaz</Element>
+                <Element>Aquamarine</Element>
+                <Element>Jade</Element>
+              </Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Fellowship">
+            <Item>
+              <Value xsi:type="xsd:int">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="8" xsi:type="ArrayOfString">
+                <Element>Frodo</Element>
+                <Element>Gandalf</Element>
+                <Element>Samwise</Element>
+                <Element>Merry</Element>
+                <Element>Pippin</Element>
+                <Element>Aragon</Element>
+                <Element>Faramir</Element>
+                <Element>Legolas</Element>
+                <Element>Gimli</Element>
+              </Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+    </Children>
+  </BrowseElement>
+  <BrowseElement ElementName="Dynamic">
+    <Children>
+      <BrowseElement ElementName="Analog Types">
+        <Children>
+          <BrowseElement ElementName="Fools">
+            <Item>
+              <Value xsi:type="xsd:short" Period="10000" SamplingRate="1000">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">+500</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">-500</Property>
+            </Item>
+            <Children>
+              <BrowseElement ElementName="Rosencrantz">
+                <Item>
+                  <Value xsi:type="xsd:int" Period="10000" SamplingRate="1000">0</Value>
+                  <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+                  <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+                  <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+                  <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+                </Item>
+              </BrowseElement>
+              <BrowseElement ElementName="Guildenstern">
+                <Item>
+                  <Value xsi:type="xsd:int" Period="10000" SamplingRate="1000">0</Value>
+                  <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+                  <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+                  <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+                  <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+                </Item>
+              </BrowseElement>
+            </Children>
+          </BrowseElement>
+          <BrowseElement ElementName="Int">
+            <Item>
+              <Value xsi:type="xsd:int" Period="10000" SamplingRate="1000">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double">
+            <Item>
+              <Value xsi:type="xsd:double" Period="16000" SamplingRate="1000" Waveform="2">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">100</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Int[]">
+            <Item>
+              <Value xsi:type="ArrayOfInt" Period="16000" SamplingRate="1000">
+                <Element>-4096</Element>
+                <Element>0</Element>
+                <Element>+4096</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">4096</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">-4096</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Double[]">
+            <Item>
+              <Value xsi:type="ArrayOfDouble" Period="16000" SamplingRate="1000" Waveform="2">
+                <Element>-1000</Element>
+                <Element>0</Element>
+                <Element>+1000</Element>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">1</Property>
+              <Property PropertyID="102" xsi:type="xsd:double">1000</Property>
+              <Property PropertyID="103" xsi:type="xsd:double">-1000</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="Enumerated Types">
+        <Children>
+          <BrowseElement ElementName="Gems">
+            <Item>
+              <Value xsi:type="xsd:int" Period="16000" SamplingRate="4000" Waveform="3">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="8" xsi:type="ArrayOfString">
+                <Element>Ruby</Element>
+                <Element>Diamond</Element>
+                <Element>Emerald</Element>
+                <Element>Opal</Element>
+                <Element>Garnet</Element>
+                <Element>Topaz</Element>
+                <Element>Aquamarine</Element>
+                <Element>Jade</Element>
+              </Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Fellowship">
+            <Item>
+              <Value xsi:type="xsd:int" Period="16000" SamplingRate="4000" Waveform="3">0</Value>
+              <Property PropertyID="6" xsi:type="xsd:float">0</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">2</Property>
+              <Property PropertyID="8" xsi:type="ArrayOfString">
+                <Element>Frodo</Element>
+                <Element>Gandalf</Element>
+                <Element>Samwise</Element>
+                <Element>Merry</Element>
+                <Element>Pippin</Element>
+                <Element>Aragon</Element>
+                <Element>Faramir</Element>
+                <Element>Legolas</Element>
+                <Element>Gimli</Element>
+              </Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+    </Children>
+  </BrowseElement>
+  <BrowseElement ElementName="Complex Data">
+    <Children>
+      <BrowseElement ElementName="Static">
+        <Children>
+          <BrowseElement ElementName="Integers">
+            <Item>
+              <Value xsi:type="IntegerValues" Dictionary="OpcDa20Server.binary.xml">
+                <SByte xsi:type="xsd:byte">127</SByte>
+                <Byte xsi:type="xsd:unsignedByte">255</Byte>
+                <Short xsi:type="xsd:short">32767</Short>
+                <UShort xsi:type="xsd:unsignedShort">65535</UShort>
+                <Int xsi:type="xsd:int">2147483647</Int>
+                <UInt xsi:type="xsd:unsignedInt">4294967295</UInt>
+                <Long xsi:type="xsd:long">9223372036854775807</Long>
+                <ULong xsi:type="xsd:unsignedLong">18446744073709551615</ULong>
+                <LongLong xsi:type="Int128">
+                  <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                </LongLong>
+                <ULongLong xsi:type="UInt128">
+                  <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                </ULongLong>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Floats">
+            <Item>
+              <Value xsi:type="FloatValues" Dictionary="OpcDa20Server.binary.xml">
+                <Single xsi:type="xsd:float">+3.402823466e+38</Single>
+                <Double xsi:type="xsd:double">+1.7976931348623158e+308</Double>
+                <Quadruple xsi:type="Quadruple">
+                  <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                </Quadruple>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Strings">
+            <Item>
+              <Value xsi:type="StringValues" Dictionary="OpcDa20Server.binary.xml">
+                <MultiByteNull xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteNull>
+                <WideCharNull xsi:type="xsd:string">ABCDEFGHIJKL</WideCharNull>
+                <MultiByteFixed xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteFixed>
+                <WideCharFixed xsi:type="xsd:string">ABCDEFGHIJKL</WideCharFixed>
+                <MultiByteRef xsi:type="xsd:int">0</MultiByteRef>
+                <MultiByteRef xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteRef>
+                <WideCharRef xsi:type="xsd:int">0</WideCharRef>
+                <WideCharRef xsi:type="xsd:string">ABCDEFGHIJKL</WideCharRef>
+                <VeryWide xsi:type="VeryWideString">
+                  <hexBinary xsi:type="xsd:hexBinary">6500000000000000</hexBinary>
+                </VeryWide>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Bits">
+            <Item>
+              <Value xsi:type="BitValues" Dictionary="OpcDa20Server.binary.xml">
+                <One xsi:type="xsd:hexBinary">01</One>
+                <Two xsi:type="xsd:hexBinary">03</Two>
+                <Three xsi:type="xsd:hexBinary">05</Three>
+                <Four xsi:type="xsd:hexBinary">09</Four>
+                <Five xsi:type="xsd:hexBinary">11</Five>
+                <Six xsi:type="xsd:hexBinary">21</Six>
+                <Seven xsi:type="xsd:hexBinary">41</Seven>
+                <Eight xsi:type="xsd:hexBinary">81</Eight>
+                <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                <Eight xsi:type="xsd:hexBinary">81</Eight>
+                <Seven xsi:type="xsd:hexBinary">41</Seven>
+                <Six xsi:type="xsd:hexBinary">21</Six>
+                <Five xsi:type="xsd:hexBinary">11</Five>
+                <Four xsi:type="xsd:hexBinary">09</Four>
+                <Three xsi:type="xsd:hexBinary">05</Three>
+                <Two xsi:type="xsd:hexBinary">03</Two>
+                <One xsi:type="xsd:hexBinary">01</One>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="Structs">
+            <Item>
+              <Value xsi:type="StructValues" Dictionary="OpcDa20Server.binary.xml">
+                <Ints xsi:type="IntegerValues">
+                  <SByte xsi:type="xsd:byte">127</SByte>
+                  <Byte xsi:type="xsd:unsignedByte">255</Byte>
+                  <Short xsi:type="xsd:short">32767</Short>
+                  <UShort xsi:type="xsd:unsignedShort">65535</UShort>
+                  <Int xsi:type="xsd:int">2147483647</Int>
+                  <UInt xsi:type="xsd:unsignedInt">4294967295</UInt>
+                  <Long xsi:type="xsd:long">9223372036854775807</Long>
+                  <ULong xsi:type="xsd:unsignedLong">18446744073709551615</ULong>
+                  <LongLong xsi:type="Int128">
+                    <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                  </LongLong>
+                  <ULongLong xsi:type="UInt128">
+                    <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                  </ULongLong>
+                </Ints>
+                <Floats xsi:type="FloatValues">
+                  <Single xsi:type="xsd:float">+3.402823466e+38</Single>
+                  <Double xsi:type="xsd:double">+1.7976931348623158e+308</Double>
+                  <Quadruple xsi:type="Quadruple">
+                    <hexBinary xsi:type="xsd:hexBinary">0102030405060708090A0B0C0D0E0F10</hexBinary>
+                  </Quadruple>
+                </Floats>
+                <Strings xsi:type="StringValues">
+                  <MultiByteNull xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteNull>
+                  <WideCharNull xsi:type="xsd:string">ABCDEFGHIJKL</WideCharNull>
+                  <MultiByteFixed xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteFixed>
+                  <WideCharFixed xsi:type="xsd:string">ABCDEFGHIJKL</WideCharFixed>
+                  <MultiByteRef xsi:type="xsd:int">0</MultiByteRef>
+                  <MultiByteRef xsi:type="xsd:string">ABCDEFGHIJKL</MultiByteRef>
+                  <WideCharRef xsi:type="xsd:int">0</WideCharRef>
+                  <WideCharRef xsi:type="xsd:string">ABCDEFGHIJKL</WideCharRef>
+                  <VeryWide xsi:type="VeryWideString">
+                    <hexBinary xsi:type="xsd:hexBinary">6500000000000000</hexBinary>
+                  </VeryWide>
+                </Strings>
+                <Bits xsi:type="BitValues">
+                  <One xsi:type="xsd:hexBinary">01</One>
+                  <Two xsi:type="xsd:hexBinary">03</Two>
+                  <Three xsi:type="xsd:hexBinary">05</Three>
+                  <Four xsi:type="xsd:hexBinary">09</Four>
+                  <Five xsi:type="xsd:hexBinary">11</Five>
+                  <Six xsi:type="xsd:hexBinary">21</Six>
+                  <Seven xsi:type="xsd:hexBinary">41</Seven>
+                  <Eight xsi:type="xsd:hexBinary">81</Eight>
+                  <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                  <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                  <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                  <Eight xsi:type="xsd:hexBinary">81</Eight>
+                  <Seven xsi:type="xsd:hexBinary">41</Seven>
+                  <Six xsi:type="xsd:hexBinary">21</Six>
+                  <Five xsi:type="xsd:hexBinary">11</Five>
+                  <Four xsi:type="xsd:hexBinary">09</Four>
+                  <Three xsi:type="xsd:hexBinary">05</Three>
+                  <Two xsi:type="xsd:hexBinary">03</Two>
+                  <One xsi:type="xsd:hexBinary">01</One>
+                </Bits>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="FixedArrays">
+            <Item>
+              <Value xsi:type="FixedArrayValues" Dictionary="OpcDa20Server.binary.xml">
+                <UShort xsi:type="ArrayOfUnsignedShort">
+                  <unsignedShort>0</unsignedShort>
+                  <unsignedShort>32768</unsignedShort>
+                  <unsignedShort>65535</unsignedShort>
+                </UShort>
+                <Double xsi:type="ArrayOfDouble">
+                  <double>-2.2250738585072014e-308</double>
+                  <double>+2.2204460492503131e-016</double>
+                  <double>+1.7976931348623158e+308</double>
+                </Double>
+                <MultiByteNull xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </MultiByteNull>
+                <WideCharFixed xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </WideCharFixed>
+                <Five xsi:type="ArrayOfHexBinary">
+                  <hexBinary xsi:type="xsd:hexBinary">01</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">02</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">04</hexBinary>
+                </Five>
+                <Bits xsi:type="ArrayOfBitValues">
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                </Bits>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="VariableArrays">
+            <Item>
+              <Value xsi:type="VariableArrayValues" Dictionary="OpcDa20Server.binary.xml">
+                <UShortCount xsi:type="xsd:byte">3</UShortCount>
+                <UShort xsi:type="ArrayOfUnsignedShort">
+                  <unsignedShort>0</unsignedShort>
+                  <unsignedShort>32768</unsignedShort>
+                  <unsignedShort>65535</unsignedShort>
+                </UShort>
+                <DoubleCount xsi:type="xsd:unsignedByte">3</DoubleCount>
+                <Double xsi:type="ArrayOfDouble">
+                  <double>-2.2250738585072014e-308</double>
+                  <double>+2.2204460492503131e-016</double>
+                  <double>+1.7976931348623158e+308</double>
+                </Double>
+                <MultiByteNullCount xsi:type="xsd:short">3</MultiByteNullCount>
+                <MultiByteNull xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </MultiByteNull>
+                <WideCharFixedCount xsi:type="xsd:unsignedShort">3</WideCharFixedCount>
+                <WideCharFixed xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </WideCharFixed>
+                <FiveCount xsi:type="xsd:int">3</FiveCount>
+                <Five xsi:type="ArrayOfHexBinary">
+                  <hexBinary xsi:type="xsd:hexBinary">01</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">02</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">04</hexBinary>
+                </Five>
+                <BitsCount xsi:type="xsd:unsignedInt">3</BitsCount>
+                <Bits xsi:type="ArrayOfBitValues">
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                </Bits>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+          <BrowseElement ElementName="TerminatedArrays">
+            <Item>
+              <Value xsi:type="TerminatedArrayValues" Dictionary="OpcDa20Server.binary.xml">
+                <UShort xsi:type="ArrayOfUnsignedShort">
+                  <unsignedShort>0</unsignedShort>
+                  <unsignedShort>32768</unsignedShort>
+                  <unsignedShort>65535</unsignedShort>
+                </UShort>
+                <Double xsi:type="ArrayOfDouble">
+                  <double>-2.2250738585072014e-308</double>
+                  <double>+2.2204460492503131e-016</double>
+                  <double>+1.7976931348623158e+308</double>
+                </Double>
+                <MultiByteNull xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </MultiByteNull>
+                <WideCharFixed xsi:type="ArrayOfString">
+                  <string>ABCDEFGHIJKL</string>
+                  <string>MNOPQRSTUVW</string>
+                  <string>XYZ</string>
+                </WideCharFixed>
+                <Bits xsi:type="ArrayOfBitValues">
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                </Bits>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+      <BrowseElement ElementName="Dynamic">
+        <Children>
+          <BrowseElement ElementName="FixedArrays">
+            <Item>
+              <Value xsi:type="FixedArrayValues" Dictionary="OpcDa20Server.binary.xml" Period="30000" SamplingRate="1000">
+                <UShort xsi:type="ArrayOfUnsignedShort">
+                  <unsignedShort>0</unsignedShort>
+                  <unsignedShort>32768</unsignedShort>
+                  <unsignedShort>65535</unsignedShort>
+                </UShort>
+                <Double xsi:type="ArrayOfDouble" MaxValue="100" MinValue="0" Waveform="2">
+                  <double>0</double>
+                  <double>50</double>
+                  <double>100</double>
+                </Double>
+                <MultiByteNull xsi:type="ArrayOfString">
+                  <string>ABC</string>
+                  <string>EFG</string>
+                  <string>XYZ</string>
+                </MultiByteNull>
+                <WideCharFixed xsi:type="ArrayOfString">
+                  <string>ABC</string>
+                  <string>EFG</string>
+                  <string>XYZ</string>
+                </WideCharFixed>
+                <Five xsi:type="ArrayOfHexBinary">
+                  <hexBinary xsi:type="xsd:hexBinary">00</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">00</hexBinary>
+                  <hexBinary xsi:type="xsd:hexBinary">00</hexBinary>
+                </Five>
+                <Bits xsi:type="ArrayOfBitValues">
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                  <BitValues>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Ten xsi:type="xsd:hexBinary">0102</Ten>
+                    <Nine xsi:type="xsd:hexBinary">0101</Nine>
+                    <Eight xsi:type="xsd:hexBinary">81</Eight>
+                    <Seven xsi:type="xsd:hexBinary">41</Seven>
+                    <Six xsi:type="xsd:hexBinary">21</Six>
+                    <Five xsi:type="xsd:hexBinary">11</Five>
+                    <Four xsi:type="xsd:hexBinary">09</Four>
+                    <Three xsi:type="xsd:hexBinary">05</Three>
+                    <Two xsi:type="xsd:hexBinary">03</Two>
+                    <One xsi:type="xsd:hexBinary">01</One>
+                  </BitValues>
+                </Bits>
+              </Value>
+              <Property PropertyID="6" xsi:type="xsd:float">100</Property>
+              <Property PropertyID="7" xsi:type="xsd:int">0</Property>
+            </Item>
+          </BrowseElement>
+        </Children>
+      </BrowseElement>
+    </Children>
+  </BrowseElement>  
+</Server>

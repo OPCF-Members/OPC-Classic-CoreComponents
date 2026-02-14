@@ -315,9 +315,9 @@ endif() # x64 only
 set(TESTSVR_SRC_DIR  "${CMAKE_SOURCE_DIR}/Source/Common/TestServer")
 set(TESTSVR_BIN_DIR  "${CMAKE_CURRENT_BINARY_DIR}/OpcTestServer")
 set(OPC_UTILS_DIR    "${CMAKE_SOURCE_DIR}/Source/Shared/OpcUtilityClasses")
-set(SAMPLE_SVR_DIR   "${CMAKE_SOURCE_DIR}/../COM_SourceCode/Source/Data Access/Sample Server Classes")
-set(SAMPLE_DEV_DIR   "${CMAKE_SOURCE_DIR}/../COM_SourceCode/Source/Data Access/Sample Device")
-set(SAMPLE_205_DIR   "${CMAKE_SOURCE_DIR}/../COM_SourceCode/Source/Data Access/Sample Server (2.05a Only)")
+set(SAMPLE_SVR_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleServerClasses")
+set(SAMPLE_DEV_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleDevice")
+set(SAMPLE_205_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleServer205")
 file(MAKE_DIRECTORY "${TESTSVR_BIN_DIR}")
 
 # Determine platform tag and MIDL environment
