@@ -1,0 +1,48 @@
+# Auto-detect text files and normalize line endings
+* text=auto
+
+# Source code
+*.c     text diff=c
+*.cpp   text diff=cpp
+*.h     text diff=c
+*.hpp   text diff=cpp
+*.idl   text
+*.def   text
+*.rc    text
+*.mc    text
+
+# Build files
+*.cmake text
+*.ps1   text
+*.txt   text
+*.md    text
+*.yml   text
+*.yaml  text
+*.json  text
+*.xml   text
+*.wxs   text
+*.wxi   text
+
+# Binary files — mark as binary so they can't sneak in as LFS or merges
+*.ico   binary
+*.rtf   binary
+*.tlb   binary
+
+# Block common binary types from diff/merge (defense in depth with .gitignore)
+*.exe   binary
+*.dll   binary
+*.msi   binary
+*.msm   binary
+*.lib   binary
+*.obj   binary
+*.pdb   binary
+*.zip   binary
+*.7z    binary
+*.cab   binary
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.bmp   binary
+*.mp4   binary
+*.avi   binary

@@ -377,12 +377,48 @@ try {
         Build-Wix $arch
     }
 
+    # -------------------------------------------------------------------
+    # Create redistributable ZIP
+    # -------------------------------------------------------------------
+    Write-Host ''
+    Write-Host '============================================================'
+    Write-Host '  Creating Redistributable ZIP'
+    Write-Host '============================================================'
+    Write-Host ''
+
+    $DistDir = Join-Path $ScriptDir 'dist'
+    New-Item -ItemType Directory -Path $DistDir -Force | Out-Null
+
+    $ZipName = "OPC-Core-Components-Redistributables-$Major.$Minor.$Revision.zip"
+    $ZipPath = Join-Path $DistDir $ZipName
+
+    # Remove existing ZIP if present
+    if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
+
+    # Collect files for the ZIP
+    $zipFiles = @()
+    $zipFiles += @(Get-ChildItem $MsmDir -Include '*.msm','*.msi' -Recurse | Select-Object -ExpandProperty FullName)
+
+    $readmePath  = Join-Path $ScriptDir 'README.md'
+    $licensePath = Join-Path $ScriptDir 'LICENSE.md'
+    if (Test-Path $readmePath)  { $zipFiles += $readmePath }
+    if (Test-Path $licensePath) { $zipFiles += $licensePath }
+
+    if ($zipFiles.Count -eq 0) {
+        throw "No files found to include in redistributable ZIP."
+    }
+
+    Write-Host "Creating $ZipName with $($zipFiles.Count) file(s)..."
+    Compress-Archive -Path $zipFiles -DestinationPath $ZipPath -CompressionLevel Optimal
+    Write-Host "  ZIP: $ZipPath"
+
     Write-Host ''
     Write-Host '============================================================'
     Write-Host '  BUILD COMPLETE'
     Write-Host '============================================================'
     Write-Host ''
     Write-Host "  Output files in: $MsmDir"
+    Write-Host "  Redistributable: $ZipPath"
     Write-Host ''
 }
 catch {

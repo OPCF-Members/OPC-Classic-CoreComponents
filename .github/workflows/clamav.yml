@@ -1,0 +1,43 @@
+name: "ClamAV Malware Scan"
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  scan:
+    name: ClamAV Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install ClamAV
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq clamav clamav-daemon
+
+      - name: Update virus definitions
+        run: |
+          sudo systemctl stop clamav-freshclam || true
+          sudo freshclam
+
+      - name: Run ClamAV scan
+        run: |
+          clamscan --recursive --alert-broken --alert-encrypted \
+            --max-filesize=50M --max-scansize=200M \
+            --exclude-dir='^\.git$' \
+            --infected \
+            . 2>&1 | tee scan-results.txt
+          # clamscan exits 1 if infected files found, 0 if clean
+          exit ${PIPESTATUS[0]}
+
+      - name: Upload scan results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clamav-scan-results
+          path: scan-results.txt
+          retention-days: 30

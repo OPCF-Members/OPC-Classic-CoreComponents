@@ -184,9 +184,20 @@
             <?endif?>
         </Feature>
 
+        <Feature Id="DevEnvironment"
+                 Title="Development Environment"
+                 Description="Installs headers, IDL files, and reference DLLs needed to build OPC COM applications."
+                 Level="2"
+                 AllowAbsent="yes">
+            <MergeRef Id="MergeModuleSdk" />
+            <?if $(var.Platform) = x64 ?>
+            <MergeRef Id="MergeModuleSdkX86" />
+            <?endif?>
+        </Feature>
+
         <Feature Id="TestServer"
-                 Title="OPC DA Test Server"
-                 Description="A minimal OPC DA 2.05a test server for verifying proxy/stub installation."
+                 Title="Test Applications"
+                 Description="OPC DA 2.05a test server and client for verifying that x86 and x64 COM servers can be discovered across platforms."
                  Level="2"
                  AllowAbsent="yes">
             <ComponentRef Id="comp_OpcTestServer" />
@@ -196,17 +207,6 @@
             <ComponentRef Id="comp_OpcTestServer_x86" />
             <ComponentRef Id="comp_OpcTestServerConfig_x86" />
             <ComponentRef Id="comp_OpcTestClient_x86" />
-            <?endif?>
-        </Feature>
-
-        <Feature Id="DevEnvironment"
-                 Title="Development Environment"
-                 Description="Installs headers, IDL files, and reference DLLs needed to build OPC COM applications."
-                 Level="2"
-                 AllowAbsent="yes">
-            <MergeRef Id="MergeModuleSdk" />
-            <?if $(var.Platform) = x64 ?>
-            <MergeRef Id="MergeModuleSdkX86" />
             <?endif?>
         </Feature>
 

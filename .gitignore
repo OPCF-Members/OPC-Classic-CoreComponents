@@ -1,6 +1,42 @@
 # Build outputs
 build/
 out/
+dist/
 
 # WiX extension cache
 .wix/
+
+# Binaries — should never be checked in
+*.exe
+*.dll
+*.msi
+*.msm
+*.cab
+*.lib
+*.obj
+*.pdb
+*.ilk
+*.exp
+
+# Installers and packages
+*.nupkg
+*.zip
+*.7z
+*.tar.gz
+*.rar
+
+# Images and media (source .ico files are allowed — used by RC)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+*.svg
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.mp3
+*.wav

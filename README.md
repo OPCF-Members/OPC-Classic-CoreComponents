@@ -10,11 +10,17 @@ and MSI installers. These are the core runtime components that OPC Classic
   Commands, Data Exchange, Security, and Common interfaces
 - **OpcEnum.exe** — OPC Server Enumerator service (x86)
 - **OpcCategoryManager.exe** — OPC component category registration (x64)
-- **OpcTestServer** — OPC DA 2.05a test server (x86 and x64)
-- **OpcTestClient** — OPC DA test client (x86 and x64)
 - **Merge modules (.msm)** — WiX merge modules for embedding in third-party installers
 - **SDK merge modules (.msm)** — headers, IDLs, and reference DLLs for developers
-- **MSI installers (.msi)** — standalone redistributable installers
+- **MSI installers (.msi)** — standalone redistributable installers. The x64 MSI
+  includes all x86 components and is the only installer needed on 64-bit systems.
+- **Test Applications** — OPC DA 2.05a test server and test client (x86 and x64)
+
+The test applications allow you to quickly verify that x86 COM servers can be
+discovered by an x64 client and vice versa. On a 64-bit system with the test
+components installed, running either the x86 or x64 version of the test client
+should show two servers (one for each platform). If only the x86 installer is
+installed, only one server will appear.
 
 ## Prerequisites
 

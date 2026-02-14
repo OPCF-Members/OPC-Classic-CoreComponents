@@ -5,7 +5,7 @@
 # Source is mounted at runtime (not baked into the image).
 #
 # Build:  docker build -t opc-core-builder docker
-# Run:    docker run --rm -v <source>:C:\src:ro -v <output>:C:\out opc-core-builder [x86|x64|both]
+# Run:    docker run --rm -v <source>:C:\src -v <output>:C:\out opc-core-builder [x86|x64|both]
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2022
 
@@ -14,6 +14,7 @@ SHELL ["cmd", "/S", "/C"]
 # ----------------------------------------------------------------------------
 # 1. Visual Studio 2022 Build Tools
 #    - C++ build tools workload (includes CMake, MSBuild, Windows SDK)
+#    - ATL needed by OpcEnum.exe
 # ----------------------------------------------------------------------------
 RUN powershell -Command " `
     $ProgressPreference = 'SilentlyContinue'; `
@@ -22,8 +23,9 @@ RUN powershell -Command " `
         --installPath C:\BuildTools `
         --add Microsoft.VisualStudio.Workload.VCTools `
         --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+        --add Microsoft.VisualStudio.Component.VC.ATL `
         --add Microsoft.VisualStudio.Component.VC.CMake.Project `
-        --add Microsoft.VisualStudio.Component.Windows10SDK.20348 `
+        --add Microsoft.VisualStudio.Component.Windows11SDK.22621 `
  && del /q C:\vs_buildtools.exe
 
 # ----------------------------------------------------------------------------
