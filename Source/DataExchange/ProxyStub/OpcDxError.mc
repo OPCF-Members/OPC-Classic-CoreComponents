@@ -1,27 +1,31 @@
-;//==============================================================================
-;// TITLE: OpcDxError.h
+;// ========================================================================
+;// Copyright (c) 2002-2026 OPC Foundation. All rights reserved.
 ;//
-;// CONTENTS:
-;// 
-;// Defines error codes for the OPC Data Exchange specification.
+;// OPC Foundation MIT License 1.00
 ;//
-;// (c) Copyright 2002 The OPC Foundation
-;// ALL RIGHTS RESERVED.
+;// Permission is hereby granted, free of charge, to any person
+;// obtaining a copy of this software and associated documentation
+;// files (the "Software"), to deal in the Software without
+;// restriction, including without limitation the rights to use,
+;// copy, modify, merge, publish, distribute, sublicense, and/or sell
+;// copies of the Software, and to permit persons to whom the
+;// Software is furnished to do so, subject to the following
+;// conditions:
 ;//
-;// DISCLAIMER:
-;//  This code is provided by the OPC Foundation solely to assist in 
-;//  understanding and use of the appropriate OPC Specification(s) and may be 
-;//  used as set forth in the License Grant section of the OPC Specification.
-;//  This code is provided as-is and without warranty or support of any sort
-;//  and is subject to the Warranty and Liability Disclaimers which appear
-;//  in the printed OPC Specification.
+;// The above copyright notice and this permission notice shall be
+;// included in all copies or substantial portions of the Software.
+;// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+;// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+;// OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+;// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+;// HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+;// WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+;// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+;// OTHER DEALINGS IN THE SOFTWARE.
 ;//
-;// MODIFICATION LOG:
-;//
-;// Date       By    Notes
-;// ---------- ---   -----
-;// 2002/12/12 RSA   Created.
-;//
+;// The complete license agreement can be found here:
+;// http://opcfoundation.org/License/MIT/1.00/
+;// ========================================================================
 
 MessageIdTypedef=HRESULT
 
@@ -201,7 +205,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_OVERRIDE_RANGE
 Language=English
-The override value is outside of the target item’s range and overridden flag is set to true.
+The override value is outside of the target itemï¿½s range and overridden flag is set to true.
 .
 
 MessageID=
@@ -217,7 +221,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_SUBSTITUTE_RANGE
 Language=English
-The substitute value is outside of the target item’s range the enable substitute value flag is set to true.
+The substitute value is outside of the target itemï¿½s range the enable substitute value flag is set to true.
 .
 
 MessageID=
@@ -233,7 +237,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_UNKNOWN_TARGET_ITEM
 Language=English
-The target item no longer exists in the DX server’s address space.
+The target item no longer exists in the DX serverï¿½s address space.
 .
 
 MessageID=
@@ -257,7 +261,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_UNKNOWN_SOURCE_ITEM
 Language=English
-The source item is no longer in the source server’s address space.
+The source item is no longer in the source serverï¿½s address space.
 .
 
 MessageID=
@@ -265,7 +269,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_INVALID_SOURCE_ITEM
 Language=English
-The source item does not confirm to the source server’s syntax.
+The source item does not confirm to the source serverï¿½s syntax.
 .
 
 MessageID=
@@ -361,7 +365,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_SOURCE_ITEM_BADTYPE
 Language=English
-The source item cannot be converted to the target’s data type. This error reported by the source server.
+The source item cannot be converted to the targetï¿½s data type. This error reported by the source server.
 .
 
 MessageID=
@@ -409,7 +413,7 @@ Severity=Error
 Facility=Interface
 SymbolicName=OPCDX_E_TARGET_ITEM_BADTYPE
 Language=English
-The target item cannot be converted to the target’s data type.
+The target item cannot be converted to the targetï¿½s data type.
 .
 	
 MessageID=
