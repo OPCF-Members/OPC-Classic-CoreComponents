@@ -223,7 +223,7 @@ add_custom_command(
         "${CATMGR_BIN_DIR}/CategoryManager.h"
         "${CATMGR_BIN_DIR}/CategoryManager_i.c"
         "${CATMGR_BIN_DIR}/CategoryManager.tlb"
-    COMMAND midl /nologo /no_robust /env x64
+    COMMAND midl /nologo /env x64
         /I "${CMAKE_SOURCE_DIR}/Source/Common/ProxyStub"
         /tlb "${CATMGR_BIN_DIR}/CategoryManager.tlb"
         /h   "${CATMGR_BIN_DIR}/CategoryManager.h"
@@ -325,10 +325,12 @@ if(CMAKE_SIZEOF_VOID_P EQUAL 8)
     set(TESTSVR_PLATFORM "x64")
     set(TESTSVR_MIDL_ENV "x64")
     set(TESTSVR_MIDL_DEFINE "/D" "OPC_PLATFORM_X64")
+    set(TESTSVR_MIDL_ROBUST "")
 else()
     set(TESTSVR_PLATFORM "x86")
     set(TESTSVR_MIDL_ENV "win32")
     set(TESTSVR_MIDL_DEFINE "")
+    set(TESTSVR_MIDL_ROBUST "/no_robust")
 endif()
 
 # MIDL: OpcTestServer.idl → OpcTestServer.h, OpcTestServer_i.c, OpcTestServer.tlb
@@ -337,7 +339,7 @@ add_custom_command(
         "${TESTSVR_BIN_DIR}/OpcTestServer.h"
         "${TESTSVR_BIN_DIR}/OpcTestServer_i.c"
         "${TESTSVR_BIN_DIR}/OpcTestServer.tlb"
-    COMMAND midl /nologo /no_robust /env ${TESTSVR_MIDL_ENV}
+    COMMAND midl /nologo ${TESTSVR_MIDL_ROBUST} /env ${TESTSVR_MIDL_ENV}
         ${TESTSVR_MIDL_DEFINE}
         /I "${CMAKE_SOURCE_DIR}/Source/Common/ProxyStub"
         /I "${CMAKE_SOURCE_DIR}/Source/DataAccess/ProxyStub"

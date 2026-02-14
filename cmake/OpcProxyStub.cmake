@@ -36,8 +36,10 @@ function(add_opc_proxy_stub)
     # Determine MIDL environment flag based on target architecture
     if(CMAKE_SIZEOF_VOID_P EQUAL 8)
         set(MIDL_ENV "x64")
+        set(MIDL_ROBUST_FLAG "")
     else()
         set(MIDL_ENV "win32")
+        set(MIDL_ROBUST_FLAG "/no_robust")
     endif()
 
     # ---------- MIDL compilation ----------
@@ -50,7 +52,7 @@ function(add_opc_proxy_stub)
     add_custom_command(
         OUTPUT "${MIDL_HEADER}" "${MIDL_IID}" "${MIDL_PROXY}" "${MIDL_DLLDATA}" "${MIDL_TLB}"
         COMMAND midl
-            /nologo /no_robust
+            /nologo ${MIDL_ROBUST_FLAG}
             /env "${MIDL_ENV}"
             /tlb "${MIDL_TLB}"
             /h "${MIDL_HEADER}"
