@@ -1,0 +1,11 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{13486D44-4821-11D2-A494-3CB306C10000} = s 'OpcEnum'
+		'OpcEnum.EXE'
+		{
+			val AppID = s {13486D44-4821-11D2-A494-3CB306C10000}
+		}
+	}
+}

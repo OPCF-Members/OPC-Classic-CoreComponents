@@ -2,27 +2,41 @@
 <!--
     OPC Core Components - COM Proxy/Stub Merge Module
 
-    This merge module packages all 8 OPC COM proxy/stub DLLs with
-    COM self-registration. It can be consumed by any MSI installer
-    to deploy the OPC COM proxy/stub infrastructure.
+    This merge module packages all 8 OPC COM proxy/stub DLLs,
+    plus OpcEnum.exe (x86) or OpcCategoryManager.exe (x64),
+    with COM self-registration.
 
-    Build with: wix build MergeModule.wxs -o MergeModule.msm
+    SDK development files (headers, IDLs, IID files) are in a separate
+    SDK merge module (MergeModuleSdk.wxs).
+
+    Target locations (matching original OPC Foundation installer):
+      x86: 6 core DLLs + OpcEnum.exe to SystemFolder
+           OpcCmdPs + OpcDxPs to CommonFilesFolder\OPC Foundation\Bin
+      x64: all 8 DLLs + OpcCategoryManager.exe to CommonFiles64Folder\OPC Foundation\Bin
+
+    Platform-specific variables (passed via -d):
+      BinDir      - path to compiled DLLs
+      ModuleGuid  - merge module GUID (x86 vs x64)
+      PlatformTag - display tag, e.g. "(x86)" or "(x64)"
+      Platform    - target platform: x86 or x64
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 
-    <Module Id="OpcComProxyStubs"
-            Guid="E25DF0F2-0F29-47E8-8537-265285ED9757"
+    <Module Id="MergeModule"
+            Guid="$(var.ModuleGuid)"
             Language="1033"
-            Version="3.0.0.0">
+            Version="$(var.Version)">
 
         <SummaryInformation
-            Description="OPC COM Proxy/Stub Merge Module"
+            Description="OPC COM Proxy/Stub Merge Module $(var.PlatformTag)"
             Manufacturer="OPC Foundation" />
 
-        <StandardDirectory Id="TARGETDIR">
-        <Directory Id="MergeRedirectFolder">
+        <?if $(var.Platform) = x86 ?>
+        <!--
+            x86: 6 core proxy/stub DLLs + OpcEnum.exe go to SystemFolder
+        -->
+        <StandardDirectory Id="SystemFolder">
 
-            <!-- OPC Common Proxy/Stub -->
             <Component Id="comp_opccomn_ps" Guid="A1B2C3D4-0001-4000-8000-000000000001">
                 <File Id="file_opccomn_ps"
                       Name="opccomn_ps.dll"
@@ -31,7 +45,6 @@
                       SelfRegCost="1" />
             </Component>
 
-            <!-- OPC Data Access Proxy/Stub -->
             <Component Id="comp_opcproxy" Guid="A1B2C3D4-0002-4000-8000-000000000002">
                 <File Id="file_opcproxy"
                       Name="opcproxy.dll"
@@ -40,7 +53,6 @@
                       SelfRegCost="1" />
             </Component>
 
-            <!-- OPC Alarms and Events Proxy/Stub -->
             <Component Id="comp_opc_aeps" Guid="A1B2C3D4-0003-4000-8000-000000000003">
                 <File Id="file_opc_aeps"
                       Name="opc_aeps.dll"
@@ -49,7 +61,6 @@
                       SelfRegCost="1" />
             </Component>
 
-            <!-- OPC Batch Proxy/Stub -->
             <Component Id="comp_opcbc_ps" Guid="A1B2C3D4-0004-4000-8000-000000000004">
                 <File Id="file_opcbc_ps"
                       Name="opcbc_ps.dll"
@@ -58,25 +69,6 @@
                       SelfRegCost="1" />
             </Component>
 
-            <!-- OPC Commands Proxy/Stub -->
-            <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
-                <File Id="file_OpcCmdPs"
-                      Name="OpcCmdPs.dll"
-                      Source="$(var.BinDir)\OpcCmdPs.dll"
-                      KeyPath="yes"
-                      SelfRegCost="1" />
-            </Component>
-
-            <!-- OPC Data Exchange Proxy/Stub -->
-            <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
-                <File Id="file_OpcDxPs"
-                      Name="OpcDxPs.dll"
-                      Source="$(var.BinDir)\OpcDxPs.dll"
-                      KeyPath="yes"
-                      SelfRegCost="1" />
-            </Component>
-
-            <!-- OPC Historical Data Access Proxy/Stub -->
             <Component Id="comp_opchda_ps" Guid="A1B2C3D4-0007-4000-8000-000000000007">
                 <File Id="file_opchda_ps"
                       Name="opchda_ps.dll"
@@ -85,7 +77,6 @@
                       SelfRegCost="1" />
             </Component>
 
-            <!-- OPC Security Proxy/Stub -->
             <Component Id="comp_opcsec_ps" Guid="A1B2C3D4-0008-4000-8000-000000000008">
                 <File Id="file_opcsec_ps"
                       Name="opcsec_ps.dll"
@@ -94,8 +85,174 @@
                       SelfRegCost="1" />
             </Component>
 
-        </Directory>
+            <!-- OPC Server Enumerator (Windows service) -->
+            <Component Id="comp_OpcEnum" Guid="A1B2C3D4-0009-4000-8000-000000000009">
+                <File Id="file_OpcEnum"
+                      Name="OpcEnum.exe"
+                      Source="$(var.BinDir)\OpcEnum.exe"
+                      KeyPath="yes" />
+            </Component>
+
         </StandardDirectory>
+
+        <!--
+            x86: OpcCmdPs and OpcDxPs go to Common Files\OPC Foundation\Bin
+        -->
+        <StandardDirectory Id="CommonFilesFolder">
+            <Directory Id="OPCFoundationFolder" Name="OPC Foundation">
+                <Directory Id="OPCBinFolder" Name="Bin">
+
+                    <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
+                        <File Id="file_OpcCmdPs"
+                              Name="OpcCmdPs.dll"
+                              Source="$(var.BinDir)\OpcCmdPs.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
+                        <File Id="file_OpcDxPs"
+                              Name="OpcDxPs.dll"
+                              Source="$(var.BinDir)\OpcDxPs.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                </Directory>
+
+            </Directory>
+        </StandardDirectory>
+
+        <!-- OpcEnum: register as Windows service on install, unregister on uninstall -->
+        <CustomAction Id="RegisterOpcEnum"
+                      FileRef="file_OpcEnum"
+                      ExeCommand="/Service"
+                      Execute="deferred"
+                      Impersonate="no"
+                      Return="check" />
+
+        <CustomAction Id="UnregisterOpcEnum"
+                      FileRef="file_OpcEnum"
+                      ExeCommand="/UnRegServer"
+                      Execute="deferred"
+                      Impersonate="no"
+                      Return="check" />
+
+        <InstallExecuteSequence>
+            <Custom Action="RegisterOpcEnum" After="InstallFiles"
+                    Condition="NOT Installed" />
+            <Custom Action="UnregisterOpcEnum" Before="RemoveFiles"
+                    Condition="Installed AND REMOVE=&quot;ALL&quot;" />
+        </InstallExecuteSequence>
+
+        <?else?>
+        <!--
+            x64: all 8 DLLs + OpcCategoryManager.exe go to Common Files\OPC Foundation\Bin
+        -->
+        <StandardDirectory Id="CommonFiles64Folder">
+            <Directory Id="OPCFoundationFolder" Name="OPC Foundation">
+                <Directory Id="OPCBinFolder" Name="Bin">
+
+                    <Component Id="comp_opccomn_ps" Guid="A1B2C3D4-0001-4000-8000-000000000001">
+                        <File Id="file_opccomn_ps"
+                              Name="opccomn_ps.dll"
+                              Source="$(var.BinDir)\opccomn_ps.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_opcproxy" Guid="A1B2C3D4-0002-4000-8000-000000000002">
+                        <File Id="file_opcproxy"
+                              Name="opcproxy.dll"
+                              Source="$(var.BinDir)\opcproxy.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_opc_aeps" Guid="A1B2C3D4-0003-4000-8000-000000000003">
+                        <File Id="file_opc_aeps"
+                              Name="opc_aeps.dll"
+                              Source="$(var.BinDir)\opc_aeps.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_opcbc_ps" Guid="A1B2C3D4-0004-4000-8000-000000000004">
+                        <File Id="file_opcbc_ps"
+                              Name="opcbc_ps.dll"
+                              Source="$(var.BinDir)\opcbc_ps.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
+                        <File Id="file_OpcCmdPs"
+                              Name="OpcCmdPs.dll"
+                              Source="$(var.BinDir)\OpcCmdPs.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
+                        <File Id="file_OpcDxPs"
+                              Name="OpcDxPs.dll"
+                              Source="$(var.BinDir)\OpcDxPs.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_opchda_ps" Guid="A1B2C3D4-0007-4000-8000-000000000007">
+                        <File Id="file_opchda_ps"
+                              Name="opchda_ps.dll"
+                              Source="$(var.BinDir)\opchda_ps.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <Component Id="comp_opcsec_ps" Guid="A1B2C3D4-0008-4000-8000-000000000008">
+                        <File Id="file_opcsec_ps"
+                              Name="opcsec_ps.dll"
+                              Source="$(var.BinDir)\opcsec_ps.dll"
+                              KeyPath="yes"
+                              SelfRegCost="1" />
+                    </Component>
+
+                    <!-- OPC Category Manager (COM local server for x64 category enumeration) -->
+                    <Component Id="comp_OpcCategoryManager" Guid="A1B2C3D4-000A-4000-8000-000000000010">
+                        <File Id="file_OpcCategoryManager"
+                              Name="OpcCategoryManager.exe"
+                              Source="$(var.BinDir)\OpcCategoryManager.exe"
+                              KeyPath="yes" />
+                    </Component>
+
+                </Directory>
+
+            </Directory>
+        </StandardDirectory>
+
+        <!-- OpcCategoryManager: register as COM server on install, unregister on uninstall -->
+        <CustomAction Id="RegisterOpcCategoryManager"
+                      FileRef="file_OpcCategoryManager"
+                      ExeCommand="/RegServer"
+                      Execute="deferred"
+                      Impersonate="no"
+                      Return="check" />
+
+        <CustomAction Id="UnregisterOpcCategoryManager"
+                      FileRef="file_OpcCategoryManager"
+                      ExeCommand="/UnRegServer"
+                      Execute="deferred"
+                      Impersonate="no"
+                      Return="check" />
+
+        <InstallExecuteSequence>
+            <Custom Action="RegisterOpcCategoryManager" After="InstallFiles"
+                    Condition="NOT Installed" />
+            <Custom Action="UnregisterOpcCategoryManager" Before="RemoveFiles"
+                    Condition="Installed AND REMOVE=&quot;ALL&quot;" />
+        </InstallExecuteSequence>
+
+        <?endif?>
 
     </Module>
 

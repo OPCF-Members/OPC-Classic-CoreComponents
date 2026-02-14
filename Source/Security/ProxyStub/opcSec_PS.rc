@@ -68,8 +68,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 #include "../../include/version.h"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,BUILD_VERSION,BUILD_NUMBER
- PRODUCTVERSION 1,0,BUILD_VERSION,0
+ FILEVERSION 1,0,BUILD_VERSION,0
+ PRODUCTVERSION 1,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -88,10 +88,10 @@ BEGIN
             VALUE "FileDescription", "OPC Security 1.00 Proxy/Stub Library"
             VALUE "FileVersion", "1.00." FILE_VERSION_TEXT "\0"
             VALUE "InternalName", "opcsec_ps"
-            VALUE "LegalCopyright", "Copyright © " COPYRIGHT_DATE " OPC Foundation\0"
+            VALUE "LegalCopyright", "Copyright ï¿½ " COPYRIGHT_DATE " OPC Foundation\0"
             VALUE "OriginalFilename", "opcsec_ps.dll"
             VALUE "ProductName", "OPC Security 1.00 Proxy/Stub Library"
-            VALUE "ProductVersion", "1.00." PRODUCT_VERSION_TEXT "\0"
+            VALUE "ProductVersion", "1.00.0.0\0"
         END
     END
     BLOCK "VarFileInfo"

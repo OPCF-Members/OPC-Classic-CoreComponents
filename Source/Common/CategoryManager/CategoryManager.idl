@@ -1,0 +1,20 @@
+import "opccomn.idl";
+
+[
+	uuid(E4DCB3DA-343C-4037-A126-9A02A284D6CE),
+	version(1.0)
+]
+library OpcCategoryManagerLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+    
+	[
+		uuid(E4DCB3DB-343C-4037-A126-9A02A284D6CE),
+        helpstring("OPC Enum x64 CategoryManager")
+	]
+	coclass OpcCategoryManager
+	{
+		[default] interface IOPCServerList;
+	};
+};

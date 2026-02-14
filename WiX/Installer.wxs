@@ -6,22 +6,32 @@
     the OPC COM proxy/stub DLLs. It consumes the merge module built from
     MergeModule.wxs.
 
-    Build with: wix build Installer.wxs -ext WixToolset.UI.wixext -o OpcCoreComponents.msi
+    Target locations are defined by the merge modules:
+      x86: 6 core DLLs to Windows\System32 (or SysWOW64 on 64-bit OS)
+           OpcCmdPs + OpcDxPs to Common Files\OPC Foundation\Bin
+      x64: all 8 DLLs to Common Files\OPC Foundation\Bin (64-bit)
+           + x86 merge module for 32-bit COM client support
+
+    Build with: wix build Installer.wxs -ext WixToolset.UI.wixext ...
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
      xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
 
-    <Package Name="OPC Core Components Redistributable"
+    <Package Name="$(var.ProductName)"
              Manufacturer="OPC Foundation"
-             Version="3.0.0.0"
-             UpgradeCode="ABE618F1-0CCE-4F84-9124-65DB0EF16E00"
+             Version="$(var.Version)"
+             UpgradeCode="$(var.UpgradeCode)"
              Compressed="yes"
              InstallerVersion="500"
              Scope="perMachine">
 
         <SummaryInformation
-            Description="OPC Core Components Redistributable"
+            Description="$(var.ProductName)"
             Manufacturer="OPC Foundation" />
+
+        <!-- Require admin privileges - shows a clear error if UAC is disabled or elevation is declined -->
+        <Launch Condition="Privileged"
+                Message="[ProductName] requires administrator privileges. Please right-click the installer and select 'Run as administrator'." />
 
         <!-- Upgrade handling: remove previous versions, block downgrades -->
         <MajorUpgrade
@@ -31,17 +41,136 @@
         <!-- Embed all files in a single cabinet -->
         <MediaTemplate EmbedCab="yes" />
 
-        <!-- Directory structure -->
-        <StandardDirectory Id="ProgramFilesFolder">
-            <Directory Id="ManufacturerFolder" Name="OPC Foundation">
-                <Directory Id="INSTALLFOLDER" Name="Core Components 3.00">
-                    <Merge Id="OpcComProxyStubs"
-                           Language="1033"
-                           SourceFile="$(var.MsmDir)\MergeModule.msm"
-                           DiskId="1" />
+        <!-- Merge modules (target directories are defined within the merge modules) -->
+        <StandardDirectory Id="TARGETDIR">
+            <Merge Id="MergeModule"
+                   Language="1033"
+                   SourceFile="$(var.MsmFile)"
+                   DiskId="1" />
+            <?if $(var.Platform) = x64 ?>
+            <Merge Id="MergeModuleX86"
+                   Language="1033"
+                   SourceFile="$(var.MsmFileX86)"
+                   DiskId="1" />
+            <?endif?>
+            <Merge Id="MergeModuleSdk"
+                   Language="1033"
+                   SourceFile="$(var.SdkMsmFile)"
+                   DiskId="1" />
+            <?if $(var.Platform) = x64 ?>
+            <Merge Id="MergeModuleSdkX86"
+                   Language="1033"
+                   SourceFile="$(var.SdkMsmFileX86)"
+                   DiskId="1" />
+            <?endif?>
+        </StandardDirectory>
+
+        <!-- OPC Test Server files installed to Common Files\OPC Foundation\Bin -->
+        <?if $(var.Platform) = x86 ?>
+        <StandardDirectory Id="CommonFilesFolder">
+        <?else?>
+        <StandardDirectory Id="CommonFiles64Folder">
+        <?endif?>
+            <Directory Id="OpcFoundationDir" Name="OPC Foundation">
+                <Directory Id="OpcBinDir" Name="Bin">
+
+                    <Component Id="comp_OpcTestServer" Guid="F8582CF5-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestServer"
+                              Name="OpcTestServer_$(var.Platform).exe"
+                              Source="$(var.BinDir)\OpcTestServer_$(var.Platform).exe"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <Component Id="comp_OpcTestServerConfig" Guid="F8582CF6-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestServerConfig"
+                              Name="OpcTestServer_$(var.Platform).config.xml"
+                              Source="$(var.BinDir)\OpcTestServer_$(var.Platform).config.xml"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <Component Id="comp_OpcTestClient" Guid="F8582CFA-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestClient"
+                              Name="OpcTestClient_$(var.Platform).exe"
+                              Source="$(var.BinDir)\OpcTestClient_$(var.Platform).exe"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <?if $(var.Platform) = x64 ?>
+                    <!-- x86 test binaries installed alongside x64 binaries -->
+                    <Component Id="comp_OpcTestServer_x86" Guid="F8582CFB-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestServer_x86"
+                              Name="OpcTestServer_x86.exe"
+                              Source="$(var.BinDirX86)\OpcTestServer_x86.exe"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <Component Id="comp_OpcTestServerConfig_x86" Guid="F8582CFC-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestServerConfig_x86"
+                              Name="OpcTestServer_x86.config.xml"
+                              Source="$(var.BinDirX86)\OpcTestServer_x86.config.xml"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <Component Id="comp_OpcTestClient_x86" Guid="F8582CFD-88FB-11DA-A5ED-0060B0692061">
+                        <File Id="file_OpcTestClient_x86"
+                              Name="OpcTestClient_x86.exe"
+                              Source="$(var.BinDirX86)\OpcTestClient_x86.exe"
+                              KeyPath="yes" />
+                    </Component>
+                    <?endif?>
+
                 </Directory>
             </Directory>
+        <?if $(var.Platform) = x86 ?>
         </StandardDirectory>
+        <?else?>
+        </StandardDirectory>
+        <?endif?>
+
+        <!-- Custom actions for OpcTestServer COM registration -->
+        <CustomAction Id="RegisterTestServer"
+                      ExeCommand="/RegServer"
+                      FileRef="file_OpcTestServer"
+                      Impersonate="no"
+                      Execute="deferred"
+                      Return="check" />
+
+        <CustomAction Id="UnregisterTestServer"
+                      ExeCommand="/UnRegServer"
+                      FileRef="file_OpcTestServer"
+                      Impersonate="no"
+                      Execute="deferred"
+                      Return="ignore" />
+
+        <?if $(var.Platform) = x64 ?>
+        <!-- Custom actions for x86 OpcTestServer COM registration -->
+        <CustomAction Id="RegisterTestServer_x86"
+                      ExeCommand="/RegServer"
+                      FileRef="file_OpcTestServer_x86"
+                      Impersonate="no"
+                      Execute="deferred"
+                      Return="check" />
+
+        <CustomAction Id="UnregisterTestServer_x86"
+                      ExeCommand="/UnRegServer"
+                      FileRef="file_OpcTestServer_x86"
+                      Impersonate="no"
+                      Execute="deferred"
+                      Return="ignore" />
+        <?endif?>
+
+        <InstallExecuteSequence>
+            <Custom Action="RegisterTestServer" After="InstallFiles"
+                    Condition="&amp;TestServer=3" />
+            <Custom Action="UnregisterTestServer" Before="RemoveFiles"
+                    Condition="?TestServer=3 AND (&amp;TestServer=2 OR REMOVE~=&quot;ALL&quot;)" />
+            <?if $(var.Platform) = x64 ?>
+            <Custom Action="RegisterTestServer_x86" After="RegisterTestServer"
+                    Condition="&amp;TestServer=3" />
+            <Custom Action="UnregisterTestServer_x86" Before="UnregisterTestServer"
+                    Condition="?TestServer=3 AND (&amp;TestServer=2 OR REMOVE~=&quot;ALL&quot;)" />
+            <?endif?>
+        </InstallExecuteSequence>
 
         <!-- Feature tree -->
         <Feature Id="Complete"
@@ -49,11 +178,40 @@
                  Description="OPC COM Proxy/Stub DLLs for DCOM communication."
                  Level="1"
                  AllowAbsent="no">
-            <MergeRef Id="OpcComProxyStubs" />
+            <MergeRef Id="MergeModule" />
+            <?if $(var.Platform) = x64 ?>
+            <MergeRef Id="MergeModuleX86" />
+            <?endif?>
         </Feature>
 
-        <!-- WixUI dialog set: provides Welcome, License, Install Dir, and Progress dialogs -->
-        <ui:WixUI Id="WixUI_InstallDir" InstallDirectory="INSTALLFOLDER" />
+        <Feature Id="TestServer"
+                 Title="OPC DA Test Server"
+                 Description="A minimal OPC DA 2.05a test server for verifying proxy/stub installation."
+                 Level="2"
+                 AllowAbsent="yes">
+            <ComponentRef Id="comp_OpcTestServer" />
+            <ComponentRef Id="comp_OpcTestServerConfig" />
+            <ComponentRef Id="comp_OpcTestClient" />
+            <?if $(var.Platform) = x64 ?>
+            <ComponentRef Id="comp_OpcTestServer_x86" />
+            <ComponentRef Id="comp_OpcTestServerConfig_x86" />
+            <ComponentRef Id="comp_OpcTestClient_x86" />
+            <?endif?>
+        </Feature>
+
+        <Feature Id="DevEnvironment"
+                 Title="Development Environment"
+                 Description="Installs headers, IDL files, and reference DLLs needed to build OPC COM applications."
+                 Level="2"
+                 AllowAbsent="yes">
+            <MergeRef Id="MergeModuleSdk" />
+            <?if $(var.Platform) = x64 ?>
+            <MergeRef Id="MergeModuleSdkX86" />
+            <?endif?>
+        </Feature>
+
+        <!-- WixUI dialog set: Feature selection tree so user can opt-in to TestServer -->
+        <ui:WixUI Id="WixUI_FeatureTree" />
 
         <!-- License agreement shown in the installer -->
         <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />

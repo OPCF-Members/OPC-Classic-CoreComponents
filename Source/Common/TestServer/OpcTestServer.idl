@@ -1,0 +1,73 @@
+//============================================================================
+// TITLE: OpcTestServer.idl
+//
+// CONTENTS:
+//
+// The OPC DA 2.05a Test Server IDL file.
+//
+// (c) Copyright 2002-2003 The OPC Foundation
+// ALL RIGHTS RESERVED.
+//
+// DISCLAIMER:
+//  This code is provided by the OPC Foundation solely to assist in
+//  understanding and use of the appropriate OPC Specification(s) and may be
+//  used as set forth in the License Grant section of the OPC Specification.
+//  This code is provided as-is and without warranty or support of any sort
+//  and is subject to the Warranty and Liability Disclaimers which appear
+//  in the printed OPC Specification.
+//
+// MODIFICATION LOG:
+//
+// Date       By    Notes
+// ---------- ---   -----
+// 2025/01/01 OPC   Test server for proxy/stub verification.
+//
+
+import "opccomn.idl";
+import "opcda.idl";
+
+#ifdef OPC_PLATFORM_X64
+
+[
+	uuid(F8582CF7-88FB-11DA-A5ED-0060B0692061),
+	version(1.0)
+]
+library OpcTestServer_x64Lib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(F8582CF8-88FB-11DA-A5ED-0060B0692061),
+        helpstring("OPC DA 2.05a Test Server (x64)")
+	]
+	coclass OpcTestServer_x64
+	{
+		[default] interface IOPCServer;
+        [source]  interface IOPCShutdown;
+	};
+};
+
+#else
+
+[
+	uuid(F8582CF2-88FB-11DA-A5ED-0060B0692061),
+	version(1.0)
+]
+library OpcTestServer_x86Lib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(F8582CF3-88FB-11DA-A5ED-0060B0692061),
+        helpstring("OPC DA 2.05a Test Server (x86)")
+	]
+	coclass OpcTestServer_x86
+	{
+		[default] interface IOPCServer;
+        [source]  interface IOPCShutdown;
+	};
+};
+
+#endif

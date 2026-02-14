@@ -1,0 +1,22 @@
+HKCR
+{
+	OPC.ServerList.1 = s 'Opc ServerList Class'
+	{
+		CLSID = s '{13486D51-4821-11D2-A494-3CB306C10000}'
+	}
+	OPC.ServerList = s 'Opc ServerList Class'
+	{
+		CurVer = s 'OPC.ServerList.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {13486D51-4821-11D2-A494-3CB306C10000} = s 'Opc ServerList Class'
+		{
+			ProgID = s 'OPC.ServerList.1'
+			VersionIndependentProgID = s 'OPC.ServerList'
+			ForceRemove 'Programmable'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{13486D44-4821-11D2-A494-3CB306C10000}'
+		}
+	}
+}

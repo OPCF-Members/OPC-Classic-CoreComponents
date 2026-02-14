@@ -55,8 +55,8 @@ END
 #include "../../include/version.h"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,0,BUILD_VERSION,BUILD_NUMBER
- PRODUCTVERSION 3,0,BUILD_VERSION,0
+ FILEVERSION 3,0,BUILD_VERSION,0
+ PRODUCTVERSION 3,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -75,10 +75,10 @@ BEGIN
             VALUE "FileDescription", "OPC Data Access 3.00 Proxy/Stub"
             VALUE "FileVersion", "3.00." FILE_VERSION_TEXT "\0"
             VALUE "InternalName", "opcproxy"
-            VALUE "LegalCopyright", "Copyright © " COPYRIGHT_DATE " OPC Foundation\0"
+            VALUE "LegalCopyright", "Copyright ï¿½ " COPYRIGHT_DATE " OPC Foundation\0"
             VALUE "OriginalFilename", "opcproxy.dll"
             VALUE "ProductName", "OPC Data Access 3.00 Proxy/Stub"
-            VALUE "ProductVersion", "3.00." PRODUCT_VERSION_TEXT "\0"
+            VALUE "ProductVersion", "3.00.0.0\0"
         END
     END
     BLOCK "VarFileInfo"
