@@ -1,61 +1,31 @@
-//============================================================================
-// TITLE: OpcEnum.cpp
-//
-// CONTENTS:
-// 
-// Implements the OpcServerList object for browsing a computer for OPC servers.
-//
-// (c) Copyright 1998-2002 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Date       By    Notes
-// ---------- ---   -----
-// 2002/06/12 mar   
-//
-//		Added KEY_EXECUTE to CRegKey.Open in tWinMain() to allow
-//		OpcEnum to be run from a non-privileged account. Thanks to Matthew
-//		Burke of Automsoft and Thomas Rummel of Softing for highlighting
-//		the problem and solution.
-//
-//		Set DCOM launch and access permissions to Everyone and the
-//		authentication level to None during Registration. Load DCOM security
-//		settings from the registry so that they can be changed later with
-//		dcomcnfg. If any security setting is already set in the registry,
-//		then that setting is not changed. Thanks to Thomas Rummel of Softing
-//		for the code to set the launch and access permissions and
-//		authentication level.
-//
-//		Corrected a problem with OpcEnum shutting down on Win9x systems when
-//		OpcEnum is started at system startup. Thanks to Thomas Rummel of
-//		Softing for finding and correcting this problem.
-//
-// 2002/07/17 mar
-//
-//		Added code so that when OpcEnum is registered as a service on Win9x
-//		systems it will add a registry value under
-//		HKLM\Software\Microsoft\Windows\CurrentVersion\RunServices
-//		to cause OpcEnum to be run automatically when the OS starts before a
-//		user has logged on. It will not stop until the OS is shutdown.
-//
-// 2003/03/02 rsa
-//
-//      Added a wait loop to ensure the service is removed from the SCM before the
-//      uninstallation completes.
-//
-// 2004/12/01 rsa
-//
-//     Use the XP SP2 DCOM configuration APIs if OS is Windows XP SP2 or greater.
-//
+/* ========================================================================
+ * Copyright (c) 2002-2026 OPC Foundation. All rights reserved.
+ *
+ * OPC Foundation MIT License 1.00
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * The complete license agreement can be found here:
+ * http://opcfoundation.org/License/MIT/1.00/
+ * ======================================================================*/
 
 #include "stdafx.h"
 #include "resource.h"

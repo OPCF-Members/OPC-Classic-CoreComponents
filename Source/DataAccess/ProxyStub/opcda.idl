@@ -1,58 +1,31 @@
-//==============================================================================
-// TITLE: opcda.idl
-//
-// CONTENTS:
-// 
-// Interface declarations for the OPC Data Access specifications.
-//
-// (c) Copyright 1997-2002 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Date       By    Notes
-// ---------- ---   -----
-// 1997/05/12 ACC   fixed UNCERTAIN bits, add AsyncIO2, OPCDataCallback, 
-//                  OPCItemProperties,  BROWSE_TO
-//
-// 1998/06/19 ACC   change V2 uuids prior to final release
-//                  to avoid conflict with 'old' OPCDA Automation uuids
-//                  Change name of 3 methods on AsyncIO2 to
-//                  Cancel2,SetEnable,GetEnable to eliminate conflicts
-//
-// 2002/02/10 CRT   Added IOPCItemDeadbandMgt Interface
-//		            Added IOPCItemSamplingMgt Interface
-//		            Added IOPCBrowse          Interface
-//		            Added IOPCServer2         Interface
-//		            Added IOPCItemIO          Interface
-//		            Added new BAD Quality status mask
-//
-// 2002/08/09 CRT   Added IOPCITEMVQTstructure
-//		            Moved #defines to Library section and “typed” them
-//		            Added definition for Category Ids
-//
-// 2002/08/21 RSA   Added asynchrounous UUIDs. Fixed formatting.
-//
-// 2002/08/30 CRT   Added IOPCSyncIO2::Read
-//		            Added IOPCServer2::RemoveGroupEx
-//
-// 2002/09/20 CRT   Added bit masks for Browse method
-//
-// 2002/10/03 CRT   Added IOPCAsyncIO3 Interface
-//		            Added IOPCGroupStateMgt2 Interface
-//
-// 2003/03/03 RSA   Added fields to ensure natural byte alignment for new structures.
-// 2003/10/12 RSA   Added constants for complex data properties.
-// 2004/09/01 RSA   Renamed modules in TYPELIB section to avoid name conflicts.
-//
+/* ========================================================================
+ * Copyright (c) 2002-2026 OPC Foundation. All rights reserved.
+ *
+ * OPC Foundation MIT License 1.00
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * The complete license agreement can be found here:
+ * http://opcfoundation.org/License/MIT/1.00/
+ * ======================================================================*/
 
 import "oaidl.idl";
 import "ocidl.idl";
