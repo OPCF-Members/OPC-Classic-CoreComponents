@@ -1,0 +1,34 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: "25 7 * * 1" # Monday 07:25 UTC
+
+jobs:
+  analyze:
+    name: Analyze (C/C++)
+    runs-on: windows-latest
+    permissions:
+      security-events: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: c-cpp
+
+      - name: Build
+        shell: cmd
+        run: |
+          cmake -S . -B build/x64 -A x64 -T v143
+          cmake --build build/x64 --config Release
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
