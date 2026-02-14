@@ -5,7 +5,7 @@
 #define xstr(s) str(s)
 #define str(s) #s
 
-#define BUILD_VERSION 70
+#define BUILD_VERSION 77
 
 #define COPYRIGHT_DATE "2026"
 #define FILE_VERSION_TEXT xstr(BUILD_VERSION)
