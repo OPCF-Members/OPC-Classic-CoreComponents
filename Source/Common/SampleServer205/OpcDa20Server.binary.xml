@@ -1,0 +1,105 @@
+<?xml version="1.0" ?>
+<TypeDictionary 
+  DictionaryName="http://opcfoundation.org/OPCSample/OpcDaServer.xml"  
+  DefaultBigEndian="false" 
+  xmlns="http://opcfoundation.org/OPCBinary/1.0/"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>
+  <TypeDescription TypeID="Int128">
+    <Field xsi:type="Integer" Length="16" Signed="true" />
+  </TypeDescription>
+  <TypeDescription TypeID="UInt128">
+    <Field xsi:type="Integer" Length="16" Signed="false" />
+  </TypeDescription>
+  <TypeDescription TypeID="Quadruple">
+    <Field xsi:type="FloatingPoint" Length="16" FloatFormat="IEEE-754 Quadruple" />
+  </TypeDescription>
+  <TypeDescription TypeID="VeryWideString">
+    <Field xsi:type="CharString" StringEncoding="UCS-4" CharWidth="4" />
+  </TypeDescription>
+  <TypeDescription TypeID="IntegerValues">
+    <Field xsi:type="Int8" Name="SByte" />
+    <Field xsi:type="UInt8" Name="Byte" />
+    <Field xsi:type="Int16" Name="Short" />
+    <Field xsi:type="UInt16" Name="UShort" />
+    <Field xsi:type="Int32" Name="Int" />
+    <Field xsi:type="UInt32" Name="UInt" />
+    <Field xsi:type="Int64" Name="Long" />
+    <Field xsi:type="UInt64" Name="ULong"/>
+    <Field xsi:type="TypeReference" Name="Int128" TypeID="Int128" />
+    <Field xsi:type="TypeReference" Name="UInt128" TypeID="UInt128" />
+  </TypeDescription> 
+  <TypeDescription TypeID="FloatValues">
+    <Field xsi:type="Single" Name="Single" />
+    <Field xsi:type="Double" Name="Double" />
+    <Field xsi:type="TypeReference" Name="Quadruple" TypeID="Quadruple" />
+  </TypeDescription> 
+  <TypeDescription TypeID="StringValues" DefaultBigEndian="true">
+    <Field xsi:type="Ascii" Name="MultiByteNull" />
+    <Field xsi:type="Unicode" Name="WideCharNull" />
+    <Field xsi:type="Ascii" Name="MultiByteFixed" Length="10" />
+    <Field xsi:type="Unicode" Name="WideCharFixed" Length="10" />
+    <Field xsi:type="Int32" />
+    <Field xsi:type="Ascii" Name="MultiByteRef" CharCountRef="" />
+    <Field xsi:type="Int32" />
+    <Field xsi:type="Unicode" Name="WideCharRef" CharCountRef="" />
+    <Field xsi:type="TypeReference" Name="VeryWide" TypeID="VeryWideString" />
+  </TypeDescription> 
+  <TypeDescription TypeID="BitValues">
+    <Field xsi:type="BitString" Name="One" Length="1" />
+    <Field xsi:type="BitString" Name="Two" Length="2" />
+    <Field xsi:type="BitString" Name="Three" Length="3" />
+    <Field xsi:type="BitString" Name="Four" Length="4" />
+    <Field xsi:type="BitString" Name="Five" Length="5" />
+    <Field xsi:type="BitString" Name="Six" Length="6" />
+    <Field xsi:type="BitString" Name="Seven" Length="7" />
+    <Field xsi:type="BitString" Name="Eight" Length="8" />
+    <Field xsi:type="BitString" Name="Nine" Length="9" />
+    <Field xsi:type="BitString" Name="Ten" Length="10" />
+    <Field xsi:type="BitString" Name="Nine" Length="9" />
+    <Field xsi:type="BitString" Name="Eight" Length="8" />
+    <Field xsi:type="BitString" Name="Seven" Length="7" />
+    <Field xsi:type="BitString" Name="Six" Length="6" />
+    <Field xsi:type="BitString" Name="Five" Length="5" />
+    <Field xsi:type="BitString" Name="Four" Length="4" />
+    <Field xsi:type="BitString" Name="Three" Length="3" />
+    <Field xsi:type="BitString" Name="Two" Length="2" />
+    <Field xsi:type="BitString" Name="One" Length="1" />
+  </TypeDescription>  
+  <TypeDescription TypeID="StructValues">
+    <Field xsi:type="TypeReference" Name="Ints" TypeID="IntegerValues" />
+    <Field xsi:type="TypeReference" Name="Floats" TypeID="FloatValues" />
+    <Field xsi:type="TypeReference" Name="Strings" TypeID="StringValues" />
+    <Field xsi:type="TypeReference" Name="Bits" TypeID="BitValues" />
+  </TypeDescription>  
+  <TypeDescription TypeID="FixedArrayValues" DefaultBigEndian="true" >
+    <Field xsi:type="UInt16" Name="UShort" ElementCount="3" />
+    <Field xsi:type="Double" Name="Double" ElementCount="3" />
+    <Field xsi:type="Ascii" Name="MultiByteNull" ElementCount="3" />
+    <Field xsi:type="Unicode" Name="WideCharFixed" Length="10" ElementCount="3" />
+    <Field xsi:type="BitString" Name="Five" Length="5" ElementCount="3" />
+    <Field xsi:type="TypeReference" Name="Bits" TypeID="BitValues" ElementCount="3" />
+  </TypeDescription> 
+  <TypeDescription TypeID="VariableArrayValues" DefaultBigEndian="false" >
+    <Field xsi:type="Int8" Name="UShortCount" />
+    <Field xsi:type="UInt16" Name="UShort" ElementCountRef="" />
+    <Field xsi:type="UInt8" Name="DoubleCount" />
+    <Field xsi:type="Double" Name="Double" ElementCountRef="" />
+    <Field xsi:type="Int16" Name="MultiByteNullCount" />
+    <Field xsi:type="Ascii" Name="MultiByteNull" ElementCountRef="" />
+    <Field xsi:type="UInt16" Name="WideCharFixedCount" />
+    <Field xsi:type="Unicode" Name="WideCharFixed" Length="10" ElementCountRef="" />
+    <Field xsi:type="Int32" Name="FiveCount" />
+    <Field xsi:type="BitString" Name="Five" Length="5" ElementCountRef="" />
+    <Field xsi:type="UInt32" Name="BitValuesCount" />
+    <Field xsi:type="TypeReference" Name="Bits" TypeID="BitValues" ElementCountRef="" />
+  </TypeDescription>   
+  <TypeDescription TypeID="TerminatedArrayValues" DefaultBigEndian="false" >
+    <Field xsi:type="UInt16" Name="UShort" FieldTerminator="0001" />
+    <Field xsi:type="Double" Name="Double" FieldTerminator="0000000000000000" />
+    <Field xsi:type="Ascii" Name="MultiByteNull" FieldTerminator="0900" />
+    <Field xsi:type="Unicode" Name="WideCharFixed" Length="10" FieldTerminator="00090000" />
+    <Field xsi:type="TypeReference" Name="Bits" TypeID="BitValues" FieldTerminator="FFFFFFFFFFFFFFFFFFFF" />
+  </TypeDescription>  
+</TypeDictionary>

@@ -1,0 +1,47 @@
+//============================================================================
+// TITLE: OpcDa20Server.idl
+//
+// CONTENTS:
+// 
+// The OPC Data Access Sample Server IDL file.
+//
+// (c) Copyright 2002-2003 The OPC Foundation
+// ALL RIGHTS RESERVED.
+//
+// DISCLAIMER:
+//  This code is provided by the OPC Foundation solely to assist in 
+//  understanding and use of the appropriate OPC Specification(s) and may be 
+//  used as set forth in the License Grant section of the OPC Specification.
+//  This code is provided as-is and without warranty or support of any sort
+//  and is subject to the Warranty and Liability Disclaimers which appear
+//  in the printed OPC Specification.
+//
+// MODIFICATION LOG:
+//
+// Date       By    Notes
+// ---------- ---   -----
+// 2002/09/03 RSA   First release.
+//
+
+import "opccomn.idl";
+import "opcda.idl";
+
+[
+	uuid(B028E06D-8C76-4f93-B12A-A3686CBB1E12),
+	version(1.0)
+]
+library OpcDa20ServerLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+    
+	[
+		uuid(B028E06E-8C76-4f93-B12A-A3686CBB1E12),
+        helpstring("OPC Data Access 2.05a Source Server")
+	]
+	coclass OpcDa20Server
+	{
+		[default] interface IOPCServer;
+        [source]  interface IOPCShutdown;
+	};
+};

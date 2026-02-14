@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OPC Core Components - SDK Merge Module
+
+    This merge module packages the OPC SDK development files:
+    headers (.h), IDL source files (.idl), IID implementation files (_i.c),
+    and reference copies of the proxy/stub DLLs.
+
+    Target location:
+      CommonFilesFolder\OPC Foundation\Include  (x86)
+      CommonFiles64Folder\OPC Foundation\Include  (x64)
+
+    Platform-specific variables (passed via -d):
+      IncludeDir  - path to installed SDK files (headers, IDLs, DLLs)
+      SdkGuid     - merge module GUID (x86 vs x64)
+      PlatformTag - display tag, e.g. "(x86)" or "(x64)"
+      Platform    - target platform: x86 or x64
+      Version     - product version string
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+    <Module Id="MergeModuleSdk"
+            Guid="$(var.SdkGuid)"
+            Language="1033"
+            Version="$(var.Version)">
+
+        <SummaryInformation
+            Description="OPC COM SDK Merge Module $(var.PlatformTag)"
+            Manufacturer="OPC Foundation" />
+
+        <?if $(var.Platform) = x86 ?>
+        <StandardDirectory Id="CommonFilesFolder">
+        <?else?>
+        <StandardDirectory Id="CommonFiles64Folder">
+        <?endif?>
+            <Directory Id="OPCFoundationSdkFolder" Name="OPC Foundation">
+                <Directory Id="OPCIncludeFolder" Name="Include">
+
+                    <!-- OPC Common -->
+                    <Component Id="sdk_opccomn_h" Guid="B2C3D4E5-0001-4000-9000-000000000001">
+                        <File Id="file_sdk_opccomn_h"
+                              Name="opccomn.h"
+                              Source="$(var.IncludeDir)\opccomn.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opccomn_i" Guid="B2C3D4E5-0002-4000-9000-000000000002">
+                        <File Id="file_sdk_opccomn_i"
+                              Name="opccomn_i.c"
+                              Source="$(var.IncludeDir)\opccomn_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opccomn_idl" Guid="B2C3D4E5-0003-4000-9000-000000000003">
+                        <File Id="file_sdk_opccomn_idl"
+                              Name="opccomn.idl"
+                              Source="$(var.IncludeDir)\opccomn.idl"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Data Access -->
+                    <Component Id="sdk_opcda_h" Guid="B2C3D4E5-0004-4000-9000-000000000004">
+                        <File Id="file_sdk_opcda_h"
+                              Name="opcda.h"
+                              Source="$(var.IncludeDir)\opcda.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcda_i" Guid="B2C3D4E5-0005-4000-9000-000000000005">
+                        <File Id="file_sdk_opcda_i"
+                              Name="opcda_i.c"
+                              Source="$(var.IncludeDir)\opcda_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcda_idl" Guid="B2C3D4E5-0006-4000-9000-000000000006">
+                        <File Id="file_sdk_opcda_idl"
+                              Name="opcda.idl"
+                              Source="$(var.IncludeDir)\opcda.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcerror_h" Guid="B2C3D4E5-0007-4000-9000-000000000007">
+                        <File Id="file_sdk_opcerror_h"
+                              Name="opcerror.h"
+                              Source="$(var.IncludeDir)\opcerror.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Alarms & Events -->
+                    <Component Id="sdk_opc_ae_h" Guid="B2C3D4E5-0008-4000-9000-000000000008">
+                        <File Id="file_sdk_opc_ae_h"
+                              Name="opc_ae.h"
+                              Source="$(var.IncludeDir)\opc_ae.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opc_ae_i" Guid="B2C3D4E5-0009-4000-9000-000000000009">
+                        <File Id="file_sdk_opc_ae_i"
+                              Name="opc_ae_i.c"
+                              Source="$(var.IncludeDir)\opc_ae_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opc_ae_idl" Guid="B2C3D4E5-000A-4000-9000-00000000000A">
+                        <File Id="file_sdk_opc_ae_idl"
+                              Name="opc_ae.idl"
+                              Source="$(var.IncludeDir)\opc_ae.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcae_er_h" Guid="B2C3D4E5-000B-4000-9000-00000000000B">
+                        <File Id="file_sdk_opcae_er_h"
+                              Name="opcae_er.h"
+                              Source="$(var.IncludeDir)\opcae_er.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcaedef_h" Guid="B2C3D4E5-000C-4000-9000-00000000000C">
+                        <File Id="file_sdk_opcaedef_h"
+                              Name="opcaedef.h"
+                              Source="$(var.IncludeDir)\opcaedef.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Batch -->
+                    <Component Id="sdk_opcbc_h" Guid="B2C3D4E5-000D-4000-9000-00000000000D">
+                        <File Id="file_sdk_opcbc_h"
+                              Name="opcbc.h"
+                              Source="$(var.IncludeDir)\opcbc.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcbc_i" Guid="B2C3D4E5-000E-4000-9000-00000000000E">
+                        <File Id="file_sdk_opcbc_i"
+                              Name="opcbc_i.c"
+                              Source="$(var.IncludeDir)\opcbc_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcbc_idl" Guid="B2C3D4E5-000F-4000-9000-00000000000F">
+                        <File Id="file_sdk_opcbc_idl"
+                              Name="opcbc.idl"
+                              Source="$(var.IncludeDir)\opcbc.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcBatchError_h" Guid="B2C3D4E5-0010-4000-9000-000000000010">
+                        <File Id="file_sdk_OpcBatchError_h"
+                              Name="OpcBatchError.h"
+                              Source="$(var.IncludeDir)\OpcBatchError.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcBatchProps_h" Guid="B2C3D4E5-0011-4000-9000-000000000011">
+                        <File Id="file_sdk_OpcBatchProps_h"
+                              Name="OpcBatchProps.h"
+                              Source="$(var.IncludeDir)\OpcBatchProps.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcBatchDef_h" Guid="B2C3D4E5-0012-4000-9000-000000000012">
+                        <File Id="file_sdk_OpcBatchDef_h"
+                              Name="OpcBatchDef.h"
+                              Source="$(var.IncludeDir)\OpcBatchDef.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Commands -->
+                    <Component Id="sdk_OpcCmd_h" Guid="B2C3D4E5-0013-4000-9000-000000000013">
+                        <File Id="file_sdk_OpcCmd_h"
+                              Name="OpcCmd.h"
+                              Source="$(var.IncludeDir)\OpcCmd.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcCmd_i" Guid="B2C3D4E5-0014-4000-9000-000000000014">
+                        <File Id="file_sdk_OpcCmd_i"
+                              Name="OpcCmd_i.c"
+                              Source="$(var.IncludeDir)\OpcCmd_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcCmd_idl" Guid="B2C3D4E5-0015-4000-9000-000000000015">
+                        <File Id="file_sdk_OpcCmd_idl"
+                              Name="OpcCmd.idl"
+                              Source="$(var.IncludeDir)\OpcCmd.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcCmdError_h" Guid="B2C3D4E5-0016-4000-9000-000000000016">
+                        <File Id="file_sdk_OpcCmdError_h"
+                              Name="OpcCmdError.h"
+                              Source="$(var.IncludeDir)\OpcCmdError.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Data Exchange -->
+                    <Component Id="sdk_OpcDx_h" Guid="B2C3D4E5-0017-4000-9000-000000000017">
+                        <File Id="file_sdk_OpcDx_h"
+                              Name="OpcDx.h"
+                              Source="$(var.IncludeDir)\OpcDx.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcDx_i" Guid="B2C3D4E5-0018-4000-9000-000000000018">
+                        <File Id="file_sdk_OpcDx_i"
+                              Name="OpcDx_i.c"
+                              Source="$(var.IncludeDir)\OpcDx_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcDx_idl" Guid="B2C3D4E5-0019-4000-9000-000000000019">
+                        <File Id="file_sdk_OpcDx_idl"
+                              Name="OpcDx.idl"
+                              Source="$(var.IncludeDir)\OpcDx.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcDxError_h" Guid="B2C3D4E5-001A-4000-9000-00000000001A">
+                        <File Id="file_sdk_OpcDxError_h"
+                              Name="OpcDxError.h"
+                              Source="$(var.IncludeDir)\OpcDxError.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Historical Data Access -->
+                    <Component Id="sdk_opchda_h" Guid="B2C3D4E5-001B-4000-9000-00000000001B">
+                        <File Id="file_sdk_opchda_h"
+                              Name="opchda.h"
+                              Source="$(var.IncludeDir)\opchda.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opchda_i" Guid="B2C3D4E5-001C-4000-9000-00000000001C">
+                        <File Id="file_sdk_opchda_i"
+                              Name="opchda_i.c"
+                              Source="$(var.IncludeDir)\opchda_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opchda_idl" Guid="B2C3D4E5-001D-4000-9000-00000000001D">
+                        <File Id="file_sdk_opchda_idl"
+                              Name="opchda.idl"
+                              Source="$(var.IncludeDir)\opchda.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcHda_Error_h" Guid="B2C3D4E5-001E-4000-9000-00000000001E">
+                        <File Id="file_sdk_OpcHda_Error_h"
+                              Name="OpcHda_Error.h"
+                              Source="$(var.IncludeDir)\OpcHda_Error.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Security -->
+                    <Component Id="sdk_opcSec_h" Guid="B2C3D4E5-001F-4000-9000-00000000001F">
+                        <File Id="file_sdk_opcSec_h"
+                              Name="opcSec.h"
+                              Source="$(var.IncludeDir)\opcSec.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcSec_i" Guid="B2C3D4E5-0020-4000-9000-000000000020">
+                        <File Id="file_sdk_opcSec_i"
+                              Name="opcSec_i.c"
+                              Source="$(var.IncludeDir)\opcSec_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcSec_idl" Guid="B2C3D4E5-0021-4000-9000-000000000021">
+                        <File Id="file_sdk_opcSec_idl"
+                              Name="opcSec.idl"
+                              Source="$(var.IncludeDir)\opcSec.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcErrSec_h" Guid="B2C3D4E5-0022-4000-9000-000000000022">
+                        <File Id="file_sdk_OpcErrSec_h"
+                              Name="OpcErrSec.h"
+                              Source="$(var.IncludeDir)\OpcErrSec.h"
+                              KeyPath="yes" />
+                    </Component>
+
+                    <!-- OPC Enum (x86 only) -->
+                    <?if $(var.Platform) = x86 ?>
+                    <Component Id="sdk_OpcEnum_h" Guid="B2C3D4E5-0023-4000-9000-000000000023">
+                        <File Id="file_sdk_OpcEnum_h"
+                              Name="OpcEnum.h"
+                              Source="$(var.IncludeDir)\OpcEnum.h"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcEnum_i" Guid="B2C3D4E5-0024-4000-9000-000000000024">
+                        <File Id="file_sdk_OpcEnum_i"
+                              Name="OpcEnum_i.c"
+                              Source="$(var.IncludeDir)\OpcEnum_i.c"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcEnum_idl" Guid="B2C3D4E5-0025-4000-9000-000000000025">
+                        <File Id="file_sdk_OpcEnum_idl"
+                              Name="OpcEnum.idl"
+                              Source="$(var.IncludeDir)\OpcEnum.idl"
+                              KeyPath="yes" />
+                    </Component>
+                    <?endif?>
+
+                    <!-- Reference copies of proxy/stub DLLs -->
+                    <Component Id="sdk_opccomn_ps_dll" Guid="B2C3D4E5-0030-4000-9000-000000000030">
+                        <File Id="file_sdk_opccomn_ps_dll"
+                              Name="opccomn_ps.dll"
+                              Source="$(var.IncludeDir)\opccomn_ps.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcproxy_dll" Guid="B2C3D4E5-0031-4000-9000-000000000031">
+                        <File Id="file_sdk_opcproxy_dll"
+                              Name="opcproxy.dll"
+                              Source="$(var.IncludeDir)\opcproxy.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opc_aeps_dll" Guid="B2C3D4E5-0032-4000-9000-000000000032">
+                        <File Id="file_sdk_opc_aeps_dll"
+                              Name="opc_aeps.dll"
+                              Source="$(var.IncludeDir)\opc_aeps.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcbc_ps_dll" Guid="B2C3D4E5-0033-4000-9000-000000000033">
+                        <File Id="file_sdk_opcbc_ps_dll"
+                              Name="opcbc_ps.dll"
+                              Source="$(var.IncludeDir)\opcbc_ps.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcCmdPs_dll" Guid="B2C3D4E5-0034-4000-9000-000000000034">
+                        <File Id="file_sdk_OpcCmdPs_dll"
+                              Name="OpcCmdPs.dll"
+                              Source="$(var.IncludeDir)\OpcCmdPs.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_OpcDxPs_dll" Guid="B2C3D4E5-0035-4000-9000-000000000035">
+                        <File Id="file_sdk_OpcDxPs_dll"
+                              Name="OpcDxPs.dll"
+                              Source="$(var.IncludeDir)\OpcDxPs.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opchda_ps_dll" Guid="B2C3D4E5-0036-4000-9000-000000000036">
+                        <File Id="file_sdk_opchda_ps_dll"
+                              Name="opchda_ps.dll"
+                              Source="$(var.IncludeDir)\opchda_ps.dll"
+                              KeyPath="yes" />
+                    </Component>
+                    <Component Id="sdk_opcsec_ps_dll" Guid="B2C3D4E5-0037-4000-9000-000000000037">
+                        <File Id="file_sdk_opcsec_ps_dll"
+                              Name="opcsec_ps.dll"
+                              Source="$(var.IncludeDir)\opcsec_ps.dll"
+                              KeyPath="yes" />
+                    </Component>
+
+                </Directory>
+            </Directory>
+        <?if $(var.Platform) = x86 ?>
+        </StandardDirectory>
+        <?else?>
+        </StandardDirectory>
+        <?endif?>
+
+    </Module>
+
+</Wix>
