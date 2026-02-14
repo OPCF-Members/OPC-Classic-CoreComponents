@@ -312,12 +312,12 @@ endif() # x64 only
 # Output: OpcTestServer_x86.exe or OpcTestServer_x64.exe
 # ============================================================================
 
-set(TESTSVR_SRC_DIR  "${CMAKE_SOURCE_DIR}/Source/Common/TestServer")
+set(TESTSVR_SRC_DIR  "${CMAKE_SOURCE_DIR}/Source/Test/TestServer")
 set(TESTSVR_BIN_DIR  "${CMAKE_CURRENT_BINARY_DIR}/OpcTestServer")
 set(OPC_UTILS_DIR    "${CMAKE_SOURCE_DIR}/Source/Shared/OpcUtilityClasses")
-set(SAMPLE_SVR_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleServerClasses")
-set(SAMPLE_DEV_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleDevice")
-set(SAMPLE_205_DIR   "${CMAKE_SOURCE_DIR}/Source/Common/SampleServer205")
+set(SAMPLE_SVR_DIR   "${CMAKE_SOURCE_DIR}/Source/Shared/SampleServerClasses")
+set(SAMPLE_DEV_DIR   "${CMAKE_SOURCE_DIR}/Source/Shared/SampleDevice")
+set(SAMPLE_205_DIR   "${CMAKE_SOURCE_DIR}/Source/Shared/SampleServer205")
 file(MAKE_DIRECTORY "${TESTSVR_BIN_DIR}")
 
 # Determine platform tag and MIDL environment
@@ -446,7 +446,7 @@ install(FILES "${TESTSVR_SRC_DIR}/OpcTestServer.config.xml"
 # ============================================================================
 
 add_executable(OpcTestClient
-    "${CMAKE_SOURCE_DIR}/Source/Common/TestClient/OpcTestClient.cpp"
+    "${CMAKE_SOURCE_DIR}/Source/Test/TestClient/OpcTestClient.cpp"
 )
 add_dependencies(OpcTestClient opccomn_ps_generate opcproxy_generate)
 
