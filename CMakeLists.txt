@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(OpcCoreComponents C CXX)
 
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Require MSVC CRT >= 14.44.35211 (Windows 7 SP1 compatible)
 # MSVC compiler 19.44.x ships CRT 14.44.x — check compiler version.
 # ---------------------------------------------------------------------------
