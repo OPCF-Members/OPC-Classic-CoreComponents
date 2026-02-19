@@ -12,6 +12,9 @@
 .PARAMETER Clean
     Remove build directory before building.
 
+.PARAMETER SkipTests
+    Do not build the OPC DA test server and client applications.
+
 .PARAMETER BuildRoot
     Override build directory (default: .\build).
     Also settable via BUILD_ROOT environment variable.
@@ -46,6 +49,8 @@ param(
     [string]$Platform = 'both',
 
     [switch]$Clean,
+
+    [switch]$SkipTests,
 
     [string]$BuildRoot,
     [string]$OutDir,
@@ -134,10 +139,14 @@ $VersionHContent = @"
 #define xstr(s) str(s)
 #define str(s) #s
 
+#define MAJOR_VERSION $Major
+#define MINOR_VERSION $Minor
+#define REVISION_VERSION $Revision
 #define BUILD_VERSION $Build
 
 #define COPYRIGHT_DATE "$CopyrightYear"
-#define FILE_VERSION_TEXT xstr(BUILD_VERSION)
+#define FILE_VERSION_TEXT xstr(MAJOR_VERSION) "." xstr(MINOR_VERSION) "." xstr(REVISION_VERSION) "." xstr(BUILD_VERSION)
+#define PRODUCT_VERSION_TEXT xstr(MAJOR_VERSION) "." xstr(MINOR_VERSION) "." xstr(REVISION_VERSION) ".0"
 "@
 Set-Content -Path $VersionH -Value $VersionHContent
 
@@ -172,7 +181,11 @@ function Build-Platform {
 
     # Configure (use v143 toolset = VS 2022 for Windows 7 SP1 CRT compatibility)
     Write-Host "Configuring CMake for $Arch..."
-    & cmake -S $ScriptDir -B $BuildDir -A $CmakeArch -T v143 -DCMAKE_INSTALL_PREFIX="$OutDir\$Arch"
+    $cmakeArgs = @('-S', $ScriptDir, '-B', $BuildDir, '-A', $CmakeArch, '-T', 'v143', "-DCMAKE_INSTALL_PREFIX=$OutDir\$Arch")
+    if ($SkipTests) {
+        $cmakeArgs += '-DOPC_BUILD_TESTS=OFF'
+    }
+    & cmake @cmakeArgs
     if ($LASTEXITCODE -ne 0) { throw "CMake configuration failed for $Arch." }
 
     # Build
@@ -304,15 +317,19 @@ function Build-Wix {
         '-bindpath', $WixDir,
         '-o', (Join-Path $MsmDir $MsiName)
     )
-    # x64 installer includes x86 merge module and x86 test binaries
+
+    # Include test applications if they were built
+    $HasTests = Test-Path (Join-Path $BinDir "OpcTestServer_$Arch.exe")
+    if ($HasTests) {
+        $wixInstallerArgs += '-d'
+        $wixInstallerArgs += 'IncludeTests=1'
+    }
+
+    # x64 installer includes x86 merge module and (optionally) x86 test binaries
     if ($Arch -eq 'x64') {
         $MsmFileX86 = Join-Path $MsmDir "opc-com-proxystub-mergemodule-$FileVersion-x86.msm"
         if (-not (Test-Path $MsmFileX86)) {
             throw "x86 merge module not found: $MsmFileX86. Build x86 platform first."
-        }
-        $BinDirX86 = Join-Path $OutDir 'x86\bin'
-        if (-not (Test-Path (Join-Path $BinDirX86 'OpcTestServer_x86.exe'))) {
-            throw "x86 test binaries not found in $BinDirX86. Build x86 platform first."
         }
         $SdkMsmFileX86 = Join-Path $MsmDir "opc-com-sdk-mergemodule-$FileVersion-x86.msm"
         if (-not (Test-Path $SdkMsmFileX86)) {
@@ -322,8 +339,15 @@ function Build-Wix {
         $wixInstallerArgs += "MsmFileX86=$MsmFileX86"
         $wixInstallerArgs += '-d'
         $wixInstallerArgs += "SdkMsmFileX86=$SdkMsmFileX86"
-        $wixInstallerArgs += '-d'
-        $wixInstallerArgs += "BinDirX86=$BinDirX86"
+
+        $BinDirX86 = Join-Path $OutDir 'x86\bin'
+        if ($HasTests) {
+            if (-not (Test-Path (Join-Path $BinDirX86 'OpcTestServer_x86.exe'))) {
+                throw "x86 test binaries not found in $BinDirX86. Build x86 platform first (without -SkipTests)."
+            }
+            $wixInstallerArgs += '-d'
+            $wixInstallerArgs += "BinDirX86=$BinDirX86"
+        }
     }
     & $WixCmd @wixInstallerArgs
     if ($LASTEXITCODE -ne 0) { throw "Installer build failed for $Arch." }

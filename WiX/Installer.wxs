@@ -65,6 +65,7 @@
             <?endif?>
         </StandardDirectory>
 
+        <?ifdef IncludeTests ?>
         <!-- OPC Test Server files installed to Common Files\OPC Foundation\Bin -->
         <?if $(var.Platform) = x86 ?>
         <StandardDirectory Id="CommonFilesFolder">
@@ -171,6 +172,7 @@
                     Condition="?TestServer=3 AND (&amp;TestServer=2 OR REMOVE~=&quot;ALL&quot;)" />
             <?endif?>
         </InstallExecuteSequence>
+        <?endif?>
 
         <!-- Feature tree -->
         <Feature Id="Complete"
@@ -195,6 +197,7 @@
             <?endif?>
         </Feature>
 
+        <?ifdef IncludeTests ?>
         <Feature Id="TestServer"
                  Title="Test Applications"
                  Description="OPC DA 2.05a test server and client for verifying that x86 and x64 COM servers can be discovered across platforms."
@@ -209,6 +212,7 @@
             <ComponentRef Id="comp_OpcTestClient_x86" />
             <?endif?>
         </Feature>
+        <?endif?>
 
         <!-- WixUI dialog set: Feature selection tree so user can opt-in to TestServer -->
         <ui:WixUI Id="WixUI_FeatureTree" />

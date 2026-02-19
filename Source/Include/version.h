@@ -5,7 +5,11 @@
 #define xstr(s) str(s)
 #define str(s) #s
 
-#define BUILD_VERSION 85
+#define MAJOR_VERSION 3
+#define MINOR_VERSION 1
+#define REVISION_VERSION 1
+#define BUILD_VERSION 88
 
 #define COPYRIGHT_DATE "2026"
-#define FILE_VERSION_TEXT xstr(BUILD_VERSION)
+#define FILE_VERSION_TEXT xstr(MAJOR_VERSION) "." xstr(MINOR_VERSION) "." xstr(REVISION_VERSION) "." xstr(BUILD_VERSION)
+#define PRODUCT_VERSION_TEXT xstr(MAJOR_VERSION) "." xstr(MINOR_VERSION) "." xstr(REVISION_VERSION) ".0"
