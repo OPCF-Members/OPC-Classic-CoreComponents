@@ -55,8 +55,8 @@ END
 #include "../../include/version.h"
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,BUILD_VERSION,0
- PRODUCTVERSION 1,0,0,0
+ FILEVERSION MAJOR_VERSION,MINOR_VERSION,REVISION_VERSION,BUILD_VERSION
+ PRODUCTVERSION MAJOR_VERSION,MINOR_VERSION,REVISION_VERSION,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -73,12 +73,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "OPC Foundation"
             VALUE "FileDescription", "OPC Data eXchange 1.00 Proxy/Stub Library"
-            VALUE "FileVersion", "1.00." FILE_VERSION_TEXT "\0"
+            VALUE "FileVersion", FILE_VERSION_TEXT "\0"
             VALUE "InternalName", "OpcDxPs"
             VALUE "LegalCopyright", "Copyright � " COPYRIGHT_DATE " OPC Foundation\0"
             VALUE "OriginalFilename", "OpcDxPs.dll"
             VALUE "ProductName", "OPC Data eXchange 1.00 Proxy/Stub Library"
-            VALUE "ProductVersion", "1.00.0.0\0"
+            VALUE "ProductVersion", PRODUCT_VERSION_TEXT "\0"
         END
     END
     BLOCK "VarFileInfo"

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(OpcCoreComponents C CXX)
 
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Require MSVC CRT >= 14.44.35211 (Windows 7 SP1 compatible)
 # MSVC compiler 19.44.x ships CRT 14.44.x — check compiler version.
 # ---------------------------------------------------------------------------
@@ -17,6 +17,9 @@ endif()
 
 # Enable /Qspectre if Spectre-mitigated libs are installed (VS Individual Components)
 option(OPC_ENABLE_SPECTRE "Enable Spectre v1 mitigation (/Qspectre)" OFF)
+
+# Build the OPC DA test server and client applications
+option(OPC_BUILD_TESTS "Build OPC DA test server and client" ON)
 
 # Include the reusable proxy stub build function
 include(cmake/OpcProxyStub.cmake)
@@ -311,6 +314,7 @@ endif() # x64 only
 # OPC DA 2.05a Test Server — both x86 and x64
 # Output: OpcTestServer_x86.exe or OpcTestServer_x64.exe
 # ============================================================================
+if(OPC_BUILD_TESTS)
 
 set(TESTSVR_SRC_DIR  "${CMAKE_SOURCE_DIR}/Source/Test/TestServer")
 set(TESTSVR_BIN_DIR  "${CMAKE_CURRENT_BINARY_DIR}/OpcTestServer")
@@ -482,6 +486,8 @@ set_target_properties(OpcTestClient PROPERTIES
 )
 
 install(TARGETS OpcTestClient RUNTIME DESTINATION bin)
+
+endif() # OPC_BUILD_TESTS
 
 # ============================================================================
 # SDK Headers — install MIDL/MC outputs + source headers/IDLs to include/
