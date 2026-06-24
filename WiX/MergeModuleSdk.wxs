@@ -10,6 +10,17 @@
       CommonFilesFolder\OPC Foundation\Include  (x86)
       CommonFiles64Folder\OPC Foundation\Include  (x64)
 
+    Component GUIDs (see the platform-conditional block below):
+      x86 - the ORIGINAL OPC Foundation (3.00.108) component GUIDs for the
+            CommonFiles\OPC Foundation\Include files, recovered from the legacy
+            x86 merge module. Reused so the new package reference-counts the same
+            installed components as the deployed base.
+      x64 - fresh GUIDs. The legacy x64 merge module shipped NO SDK/Include
+            files, so there is no prior component to preserve; these only need to
+            be distinct from x86 (ICE08) and stable from here on.
+      The two sets are deliberately disjoint: each physical file in each location
+      is a distinct component. DO NOT let x86 and x64 share a GUID.
+
     Platform-specific variables (passed via -d):
       IncludeDir  - path to installed SDK files (headers, IDLs, DLLs)
       SdkGuid     - merge module GUID (x86 vs x64)
@@ -18,6 +29,99 @@
       Version     - product version string
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+    <?if $(var.Platform) = x86 ?>
+        <!-- Legacy (3.00.108) x86 CommonFiles\OPC Foundation\Include GUIDs -->
+        <?define g_opccomn_h = "7507D67A-6018-E8EB-1CD6-E1CE564C978F" ?>
+        <?define g_opccomn_i = "FC5DDE9B-1B69-3FA1-9A05-5819297499A0" ?>
+        <?define g_opccomn_idl = "437098B9-1FF5-5045-171F-54E7F014C05E" ?>
+        <?define g_opcda_h = "98650C5E-A78A-8E3B-E9BF-74425A2523CB" ?>
+        <?define g_opcda_i = "DE3E9DCA-8685-2711-A3E0-D6992905EFC2" ?>
+        <?define g_opcda_idl = "78A0AB98-5D59-88FA-A938-6724426AF59E" ?>
+        <?define g_opcerror_h = "2BA5E564-3C7A-68BA-ECA3-F4AF64327600" ?>
+        <?define g_opc_ae_h = "7AAD8B0C-B0BC-A152-4052-9235ECC79768" ?>
+        <?define g_opc_ae_i = "FE1680B9-B277-C59F-67A5-A2D2D2350FEB" ?>
+        <?define g_opc_ae_idl = "5609747B-3EA7-2CDD-F9A2-29BEFC6D600C" ?>
+        <?define g_opcae_er_h = "EE644669-F463-6291-2F61-2E11A4CEDB32" ?>
+        <?define g_opcaedef_h = "9E442E7A-B4A3-8A95-BCA8-B520E9BA19F9" ?>
+        <?define g_opcbc_h = "B8F3EBA7-FA7A-180D-23BD-709BA81D1E53" ?>
+        <?define g_opcbc_i = "8879318F-EB22-4837-CA35-2BA3A3BBA852" ?>
+        <?define g_opcbc_idl = "71B2FAB5-D384-ADA9-8FB4-6B893E699E97" ?>
+        <?define g_OpcBatchError_h = "B3F6AFF3-BA17-DF76-714A-C42AB633BB7C" ?>
+        <?define g_OpcBatchProps_h = "58B36504-82CA-8949-98FD-CE736D3CAA7D" ?>
+        <?define g_OpcBatchDef_h = "FB029D0B-3A45-BA8F-6167-666FC00AFA3F" ?>
+        <?define g_OpcCmd_h = "B0E2A135-56D2-89EE-42BD-9279654CAAA5" ?>
+        <?define g_OpcCmd_i = "45CAF99A-BB9C-FEDB-0E24-92EC47AC3050" ?>
+        <?define g_OpcCmd_idl = "19F675EE-EA1D-CDF4-8BE2-35C964EE6DEF" ?>
+        <?define g_OpcCmdError_h = "82A63252-867B-063D-2EF7-7976827F5F63" ?>
+        <?define g_OpcDx_h = "88DB562F-9255-0368-BCF9-A31BFAF52776" ?>
+        <?define g_OpcDx_i = "2D39136E-E47A-EDDA-9D3B-EFFB977A83F3" ?>
+        <?define g_OpcDx_idl = "C05DEF7B-BB81-73EB-6C55-CED99F6285EE" ?>
+        <?define g_OpcDxError_h = "7129755B-A3D1-684C-8467-0C48AACB2151" ?>
+        <?define g_opchda_h = "E60D79A5-8932-6400-E1FD-CDF498082F21" ?>
+        <?define g_opchda_i = "91B572AE-CCBF-F76F-EF7F-415188C252CE" ?>
+        <?define g_opchda_idl = "CFA68802-F066-718B-1F67-971680525F1E" ?>
+        <?define g_OpcHda_Error_h = "CDFE06C4-DDB8-92CC-50ED-7CC0A9566865" ?>
+        <?define g_opcSec_h = "FE683149-4C48-983C-F073-F07A8F0F3FD9" ?>
+        <?define g_opcSec_i = "02AEA27C-96A4-15D5-9FCF-F0D49E156F33" ?>
+        <?define g_opcSec_idl = "4ECECD82-0B14-B53F-6E0A-CF617759A6ED" ?>
+        <?define g_OpcErrSec_h = "B616BD4B-5664-795C-0F75-BBEDAD514EAB" ?>
+        <?define g_OpcEnum_h = "855E275C-7A78-11F9-9B02-7D40F9EDBCC0" ?>
+        <?define g_OpcEnum_i = "4EDBA834-ADD4-353A-B0D7-04FFC8746D20" ?>
+        <?define g_OpcEnum_idl = "C7D97234-6F09-1E7B-F97E-A2B399FA96C6" ?>
+        <?define g_opccomn_ps_dll = "0E523F66-985E-DCE5-EA01-4554BB5C6BD5" ?>
+        <?define g_opcproxy_dll = "EDDB2CE7-1D53-2CFA-B4F4-340E3C28DB43" ?>
+        <?define g_opc_aeps_dll = "8D0A046B-91CC-0EE3-3ED1-373ED6F43383" ?>
+        <?define g_opcbc_ps_dll = "7F7DF0C9-F3E1-39A9-3A2D-6914B3DA2B2F" ?>
+        <?define g_OpcCmdPs_dll = "C3D484BD-B570-D103-36B6-3805E92D66EC" ?>
+        <?define g_OpcDxPs_dll = "F440E3B6-1079-206D-29F9-BE3870968F79" ?>
+        <?define g_opchda_ps_dll = "4BAE66D4-DF99-EA23-2B34-5439F587C62E" ?>
+        <?define g_opcsec_ps_dll = "01F4C181-D968-B1FA-5495-FA9B2CAF54F4" ?>
+    <?else?>
+        <!-- Fresh x64 GUIDs (no legacy x64 SDK components existed) -->
+        <?define g_opccomn_h = "97A81043-A06A-40F6-9437-2BE8E47F71A9" ?>
+        <?define g_opccomn_i = "902D1E91-F112-4782-9016-DBA8E3AABD88" ?>
+        <?define g_opccomn_idl = "11664897-BB09-4CA2-BFE5-5C43095D4D70" ?>
+        <?define g_opcda_h = "3A782046-CC8F-47C1-B1E1-F8AFC681FF27" ?>
+        <?define g_opcda_i = "1F2D6705-D90A-4459-A231-0FE486BD3F96" ?>
+        <?define g_opcda_idl = "FA14F33C-8AAD-48E0-B0A0-74671AD8C10C" ?>
+        <?define g_opcerror_h = "62C1E837-B73B-4E95-9FE3-3EDB1D69F841" ?>
+        <?define g_opc_ae_h = "3E1CFE69-08DC-4914-9C68-0FCA9BB5904B" ?>
+        <?define g_opc_ae_i = "08CBA1CE-6EB2-4388-8A90-EF63160EC8CA" ?>
+        <?define g_opc_ae_idl = "6DC5C505-2AB8-41D6-AC5E-B9575EB29C30" ?>
+        <?define g_opcae_er_h = "BB221E76-586A-4525-9167-3504B2A3B09A" ?>
+        <?define g_opcaedef_h = "0D2B8535-3990-4E7F-83E0-92E982F73DEC" ?>
+        <?define g_opcbc_h = "DDE9F3E3-D95F-4B87-B20E-11FF80F47FCE" ?>
+        <?define g_opcbc_i = "D69596A4-F49B-4F06-992E-E0540FE141C0" ?>
+        <?define g_opcbc_idl = "82AB88D9-21B7-4198-8D2B-181AE65F8A66" ?>
+        <?define g_OpcBatchError_h = "758D4F8F-D173-4911-8ABC-0851AD26B436" ?>
+        <?define g_OpcBatchProps_h = "A27EAAFA-5F81-43C7-BD55-B4241FA48B19" ?>
+        <?define g_OpcBatchDef_h = "D9A6F681-AEF7-44B3-9F3B-5DE658BB64C3" ?>
+        <?define g_OpcCmd_h = "102D644C-FD0A-468E-A2F0-F111C2911A57" ?>
+        <?define g_OpcCmd_i = "12B56932-65C7-4AD1-9177-F8E207B68BFF" ?>
+        <?define g_OpcCmd_idl = "FA50913B-4330-4A13-BA58-C1D3A078459A" ?>
+        <?define g_OpcCmdError_h = "4BDAB62A-B272-4D5A-AD17-03B76B10DDE2" ?>
+        <?define g_OpcDx_h = "244ECED5-0F38-44F4-B44A-A2CB6CCF283E" ?>
+        <?define g_OpcDx_i = "FE9D9F3D-6AD0-43F7-B7A8-087E06F5CFE1" ?>
+        <?define g_OpcDx_idl = "09D8B011-4AC4-469F-938A-8B5C0A4BFA20" ?>
+        <?define g_OpcDxError_h = "1DD93891-8ED9-439E-A696-49DD0E081C1C" ?>
+        <?define g_opchda_h = "F8FFF911-59CD-420F-B887-B3B559F4DB23" ?>
+        <?define g_opchda_i = "9CFC011C-2C8D-42D6-8BED-E03FB0B960C9" ?>
+        <?define g_opchda_idl = "DF4582E7-7CE0-4915-A1BD-48DE28138B67" ?>
+        <?define g_OpcHda_Error_h = "E68C2986-DAF1-43F2-AC99-98B7E620C0C9" ?>
+        <?define g_opcSec_h = "BB6C49E9-E311-4DE8-A082-53DF1F5639E2" ?>
+        <?define g_opcSec_i = "3BB7968B-9E95-4740-94F9-01B58A11B9BF" ?>
+        <?define g_opcSec_idl = "8F44D991-9FBE-4060-92D8-217E37CE3778" ?>
+        <?define g_OpcErrSec_h = "07D6FC5B-6872-4161-BA20-B7BA6668138C" ?>
+        <?define g_opccomn_ps_dll = "5B4FE3FD-AC66-4F3C-AA55-C0C042276AD1" ?>
+        <?define g_opcproxy_dll = "C0433505-3B6C-430A-8024-994726AADF16" ?>
+        <?define g_opc_aeps_dll = "15412DF1-EFB0-4F93-9C9F-F330388341A2" ?>
+        <?define g_opcbc_ps_dll = "B888A532-5C0B-4A61-A615-23BD344D30D2" ?>
+        <?define g_OpcCmdPs_dll = "ED371067-129A-43FE-A2A7-F813C64A20C2" ?>
+        <?define g_OpcDxPs_dll = "980A853D-5F4E-4868-B080-55BFFEC215B5" ?>
+        <?define g_opchda_ps_dll = "AFA92F67-2A37-4849-B5C9-B10328B65D47" ?>
+        <?define g_opcsec_ps_dll = "9D2F8E7A-08F3-450A-A6AA-AD1CAA6255BD" ?>
+    <?endif?>
 
     <Module Id="MergeModuleSdk"
             Guid="$(var.SdkGuid)"
@@ -37,19 +141,19 @@
                 <Directory Id="OPCIncludeFolder" Name="Include">
 
                     <!-- OPC Common -->
-                    <Component Id="sdk_opccomn_h" Guid="B2C3D4E5-0001-4000-9000-000000000001">
+                    <Component Id="sdk_opccomn_h" Guid="$(var.g_opccomn_h)">
                         <File Id="file_sdk_opccomn_h"
                               Name="opccomn.h"
                               Source="$(var.IncludeDir)\opccomn.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opccomn_i" Guid="B2C3D4E5-0002-4000-9000-000000000002">
+                    <Component Id="sdk_opccomn_i" Guid="$(var.g_opccomn_i)">
                         <File Id="file_sdk_opccomn_i"
                               Name="opccomn_i.c"
                               Source="$(var.IncludeDir)\opccomn_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opccomn_idl" Guid="B2C3D4E5-0003-4000-9000-000000000003">
+                    <Component Id="sdk_opccomn_idl" Guid="$(var.g_opccomn_idl)">
                         <File Id="file_sdk_opccomn_idl"
                               Name="opccomn.idl"
                               Source="$(var.IncludeDir)\opccomn.idl"
@@ -57,25 +161,25 @@
                     </Component>
 
                     <!-- OPC Data Access -->
-                    <Component Id="sdk_opcda_h" Guid="B2C3D4E5-0004-4000-9000-000000000004">
+                    <Component Id="sdk_opcda_h" Guid="$(var.g_opcda_h)">
                         <File Id="file_sdk_opcda_h"
                               Name="opcda.h"
                               Source="$(var.IncludeDir)\opcda.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcda_i" Guid="B2C3D4E5-0005-4000-9000-000000000005">
+                    <Component Id="sdk_opcda_i" Guid="$(var.g_opcda_i)">
                         <File Id="file_sdk_opcda_i"
                               Name="opcda_i.c"
                               Source="$(var.IncludeDir)\opcda_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcda_idl" Guid="B2C3D4E5-0006-4000-9000-000000000006">
+                    <Component Id="sdk_opcda_idl" Guid="$(var.g_opcda_idl)">
                         <File Id="file_sdk_opcda_idl"
                               Name="opcda.idl"
                               Source="$(var.IncludeDir)\opcda.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcerror_h" Guid="B2C3D4E5-0007-4000-9000-000000000007">
+                    <Component Id="sdk_opcerror_h" Guid="$(var.g_opcerror_h)">
                         <File Id="file_sdk_opcerror_h"
                               Name="opcerror.h"
                               Source="$(var.IncludeDir)\opcerror.h"
@@ -83,31 +187,31 @@
                     </Component>
 
                     <!-- OPC Alarms & Events -->
-                    <Component Id="sdk_opc_ae_h" Guid="B2C3D4E5-0008-4000-9000-000000000008">
+                    <Component Id="sdk_opc_ae_h" Guid="$(var.g_opc_ae_h)">
                         <File Id="file_sdk_opc_ae_h"
                               Name="opc_ae.h"
                               Source="$(var.IncludeDir)\opc_ae.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opc_ae_i" Guid="B2C3D4E5-0009-4000-9000-000000000009">
+                    <Component Id="sdk_opc_ae_i" Guid="$(var.g_opc_ae_i)">
                         <File Id="file_sdk_opc_ae_i"
                               Name="opc_ae_i.c"
                               Source="$(var.IncludeDir)\opc_ae_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opc_ae_idl" Guid="B2C3D4E5-000A-4000-9000-00000000000A">
+                    <Component Id="sdk_opc_ae_idl" Guid="$(var.g_opc_ae_idl)">
                         <File Id="file_sdk_opc_ae_idl"
                               Name="opc_ae.idl"
                               Source="$(var.IncludeDir)\opc_ae.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcae_er_h" Guid="B2C3D4E5-000B-4000-9000-00000000000B">
+                    <Component Id="sdk_opcae_er_h" Guid="$(var.g_opcae_er_h)">
                         <File Id="file_sdk_opcae_er_h"
                               Name="opcae_er.h"
                               Source="$(var.IncludeDir)\opcae_er.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcaedef_h" Guid="B2C3D4E5-000C-4000-9000-00000000000C">
+                    <Component Id="sdk_opcaedef_h" Guid="$(var.g_opcaedef_h)">
                         <File Id="file_sdk_opcaedef_h"
                               Name="opcaedef.h"
                               Source="$(var.IncludeDir)\opcaedef.h"
@@ -115,37 +219,37 @@
                     </Component>
 
                     <!-- OPC Batch -->
-                    <Component Id="sdk_opcbc_h" Guid="B2C3D4E5-000D-4000-9000-00000000000D">
+                    <Component Id="sdk_opcbc_h" Guid="$(var.g_opcbc_h)">
                         <File Id="file_sdk_opcbc_h"
                               Name="opcbc.h"
                               Source="$(var.IncludeDir)\opcbc.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcbc_i" Guid="B2C3D4E5-000E-4000-9000-00000000000E">
+                    <Component Id="sdk_opcbc_i" Guid="$(var.g_opcbc_i)">
                         <File Id="file_sdk_opcbc_i"
                               Name="opcbc_i.c"
                               Source="$(var.IncludeDir)\opcbc_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcbc_idl" Guid="B2C3D4E5-000F-4000-9000-00000000000F">
+                    <Component Id="sdk_opcbc_idl" Guid="$(var.g_opcbc_idl)">
                         <File Id="file_sdk_opcbc_idl"
                               Name="opcbc.idl"
                               Source="$(var.IncludeDir)\opcbc.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcBatchError_h" Guid="B2C3D4E5-0010-4000-9000-000000000010">
+                    <Component Id="sdk_OpcBatchError_h" Guid="$(var.g_OpcBatchError_h)">
                         <File Id="file_sdk_OpcBatchError_h"
                               Name="OpcBatchError.h"
                               Source="$(var.IncludeDir)\OpcBatchError.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcBatchProps_h" Guid="B2C3D4E5-0011-4000-9000-000000000011">
+                    <Component Id="sdk_OpcBatchProps_h" Guid="$(var.g_OpcBatchProps_h)">
                         <File Id="file_sdk_OpcBatchProps_h"
                               Name="OpcBatchProps.h"
                               Source="$(var.IncludeDir)\OpcBatchProps.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcBatchDef_h" Guid="B2C3D4E5-0012-4000-9000-000000000012">
+                    <Component Id="sdk_OpcBatchDef_h" Guid="$(var.g_OpcBatchDef_h)">
                         <File Id="file_sdk_OpcBatchDef_h"
                               Name="OpcBatchDef.h"
                               Source="$(var.IncludeDir)\OpcBatchDef.h"
@@ -153,25 +257,25 @@
                     </Component>
 
                     <!-- OPC Commands -->
-                    <Component Id="sdk_OpcCmd_h" Guid="B2C3D4E5-0013-4000-9000-000000000013">
+                    <Component Id="sdk_OpcCmd_h" Guid="$(var.g_OpcCmd_h)">
                         <File Id="file_sdk_OpcCmd_h"
                               Name="OpcCmd.h"
                               Source="$(var.IncludeDir)\OpcCmd.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcCmd_i" Guid="B2C3D4E5-0014-4000-9000-000000000014">
+                    <Component Id="sdk_OpcCmd_i" Guid="$(var.g_OpcCmd_i)">
                         <File Id="file_sdk_OpcCmd_i"
                               Name="OpcCmd_i.c"
                               Source="$(var.IncludeDir)\OpcCmd_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcCmd_idl" Guid="B2C3D4E5-0015-4000-9000-000000000015">
+                    <Component Id="sdk_OpcCmd_idl" Guid="$(var.g_OpcCmd_idl)">
                         <File Id="file_sdk_OpcCmd_idl"
                               Name="OpcCmd.idl"
                               Source="$(var.IncludeDir)\OpcCmd.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcCmdError_h" Guid="B2C3D4E5-0016-4000-9000-000000000016">
+                    <Component Id="sdk_OpcCmdError_h" Guid="$(var.g_OpcCmdError_h)">
                         <File Id="file_sdk_OpcCmdError_h"
                               Name="OpcCmdError.h"
                               Source="$(var.IncludeDir)\OpcCmdError.h"
@@ -179,25 +283,25 @@
                     </Component>
 
                     <!-- OPC Data Exchange -->
-                    <Component Id="sdk_OpcDx_h" Guid="B2C3D4E5-0017-4000-9000-000000000017">
+                    <Component Id="sdk_OpcDx_h" Guid="$(var.g_OpcDx_h)">
                         <File Id="file_sdk_OpcDx_h"
                               Name="OpcDx.h"
                               Source="$(var.IncludeDir)\OpcDx.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcDx_i" Guid="B2C3D4E5-0018-4000-9000-000000000018">
+                    <Component Id="sdk_OpcDx_i" Guid="$(var.g_OpcDx_i)">
                         <File Id="file_sdk_OpcDx_i"
                               Name="OpcDx_i.c"
                               Source="$(var.IncludeDir)\OpcDx_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcDx_idl" Guid="B2C3D4E5-0019-4000-9000-000000000019">
+                    <Component Id="sdk_OpcDx_idl" Guid="$(var.g_OpcDx_idl)">
                         <File Id="file_sdk_OpcDx_idl"
                               Name="OpcDx.idl"
                               Source="$(var.IncludeDir)\OpcDx.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcDxError_h" Guid="B2C3D4E5-001A-4000-9000-00000000001A">
+                    <Component Id="sdk_OpcDxError_h" Guid="$(var.g_OpcDxError_h)">
                         <File Id="file_sdk_OpcDxError_h"
                               Name="OpcDxError.h"
                               Source="$(var.IncludeDir)\OpcDxError.h"
@@ -205,25 +309,25 @@
                     </Component>
 
                     <!-- OPC Historical Data Access -->
-                    <Component Id="sdk_opchda_h" Guid="B2C3D4E5-001B-4000-9000-00000000001B">
+                    <Component Id="sdk_opchda_h" Guid="$(var.g_opchda_h)">
                         <File Id="file_sdk_opchda_h"
                               Name="opchda.h"
                               Source="$(var.IncludeDir)\opchda.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opchda_i" Guid="B2C3D4E5-001C-4000-9000-00000000001C">
+                    <Component Id="sdk_opchda_i" Guid="$(var.g_opchda_i)">
                         <File Id="file_sdk_opchda_i"
                               Name="opchda_i.c"
                               Source="$(var.IncludeDir)\opchda_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opchda_idl" Guid="B2C3D4E5-001D-4000-9000-00000000001D">
+                    <Component Id="sdk_opchda_idl" Guid="$(var.g_opchda_idl)">
                         <File Id="file_sdk_opchda_idl"
                               Name="opchda.idl"
                               Source="$(var.IncludeDir)\opchda.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcHda_Error_h" Guid="B2C3D4E5-001E-4000-9000-00000000001E">
+                    <Component Id="sdk_OpcHda_Error_h" Guid="$(var.g_OpcHda_Error_h)">
                         <File Id="file_sdk_OpcHda_Error_h"
                               Name="OpcHda_Error.h"
                               Source="$(var.IncludeDir)\OpcHda_Error.h"
@@ -231,25 +335,25 @@
                     </Component>
 
                     <!-- OPC Security -->
-                    <Component Id="sdk_opcSec_h" Guid="B2C3D4E5-001F-4000-9000-00000000001F">
+                    <Component Id="sdk_opcSec_h" Guid="$(var.g_opcSec_h)">
                         <File Id="file_sdk_opcSec_h"
                               Name="opcSec.h"
                               Source="$(var.IncludeDir)\opcSec.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcSec_i" Guid="B2C3D4E5-0020-4000-9000-000000000020">
+                    <Component Id="sdk_opcSec_i" Guid="$(var.g_opcSec_i)">
                         <File Id="file_sdk_opcSec_i"
                               Name="opcSec_i.c"
                               Source="$(var.IncludeDir)\opcSec_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcSec_idl" Guid="B2C3D4E5-0021-4000-9000-000000000021">
+                    <Component Id="sdk_opcSec_idl" Guid="$(var.g_opcSec_idl)">
                         <File Id="file_sdk_opcSec_idl"
                               Name="opcSec.idl"
                               Source="$(var.IncludeDir)\opcSec.idl"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcErrSec_h" Guid="B2C3D4E5-0022-4000-9000-000000000022">
+                    <Component Id="sdk_OpcErrSec_h" Guid="$(var.g_OpcErrSec_h)">
                         <File Id="file_sdk_OpcErrSec_h"
                               Name="OpcErrSec.h"
                               Source="$(var.IncludeDir)\OpcErrSec.h"
@@ -258,19 +362,19 @@
 
                     <!-- OPC Enum (x86 only) -->
                     <?if $(var.Platform) = x86 ?>
-                    <Component Id="sdk_OpcEnum_h" Guid="B2C3D4E5-0023-4000-9000-000000000023">
+                    <Component Id="sdk_OpcEnum_h" Guid="$(var.g_OpcEnum_h)">
                         <File Id="file_sdk_OpcEnum_h"
                               Name="OpcEnum.h"
                               Source="$(var.IncludeDir)\OpcEnum.h"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcEnum_i" Guid="B2C3D4E5-0024-4000-9000-000000000024">
+                    <Component Id="sdk_OpcEnum_i" Guid="$(var.g_OpcEnum_i)">
                         <File Id="file_sdk_OpcEnum_i"
                               Name="OpcEnum_i.c"
                               Source="$(var.IncludeDir)\OpcEnum_i.c"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcEnum_idl" Guid="B2C3D4E5-0025-4000-9000-000000000025">
+                    <Component Id="sdk_OpcEnum_idl" Guid="$(var.g_OpcEnum_idl)">
                         <File Id="file_sdk_OpcEnum_idl"
                               Name="OpcEnum.idl"
                               Source="$(var.IncludeDir)\OpcEnum.idl"
@@ -279,49 +383,49 @@
                     <?endif?>
 
                     <!-- Reference copies of proxy/stub DLLs -->
-                    <Component Id="sdk_opccomn_ps_dll" Guid="B2C3D4E5-0030-4000-9000-000000000030">
+                    <Component Id="sdk_opccomn_ps_dll" Guid="$(var.g_opccomn_ps_dll)">
                         <File Id="file_sdk_opccomn_ps_dll"
                               Name="opccomn_ps.dll"
                               Source="$(var.IncludeDir)\opccomn_ps.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcproxy_dll" Guid="B2C3D4E5-0031-4000-9000-000000000031">
+                    <Component Id="sdk_opcproxy_dll" Guid="$(var.g_opcproxy_dll)">
                         <File Id="file_sdk_opcproxy_dll"
                               Name="opcproxy.dll"
                               Source="$(var.IncludeDir)\opcproxy.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opc_aeps_dll" Guid="B2C3D4E5-0032-4000-9000-000000000032">
+                    <Component Id="sdk_opc_aeps_dll" Guid="$(var.g_opc_aeps_dll)">
                         <File Id="file_sdk_opc_aeps_dll"
                               Name="opc_aeps.dll"
                               Source="$(var.IncludeDir)\opc_aeps.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcbc_ps_dll" Guid="B2C3D4E5-0033-4000-9000-000000000033">
+                    <Component Id="sdk_opcbc_ps_dll" Guid="$(var.g_opcbc_ps_dll)">
                         <File Id="file_sdk_opcbc_ps_dll"
                               Name="opcbc_ps.dll"
                               Source="$(var.IncludeDir)\opcbc_ps.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcCmdPs_dll" Guid="B2C3D4E5-0034-4000-9000-000000000034">
+                    <Component Id="sdk_OpcCmdPs_dll" Guid="$(var.g_OpcCmdPs_dll)">
                         <File Id="file_sdk_OpcCmdPs_dll"
                               Name="OpcCmdPs.dll"
                               Source="$(var.IncludeDir)\OpcCmdPs.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_OpcDxPs_dll" Guid="B2C3D4E5-0035-4000-9000-000000000035">
+                    <Component Id="sdk_OpcDxPs_dll" Guid="$(var.g_OpcDxPs_dll)">
                         <File Id="file_sdk_OpcDxPs_dll"
                               Name="OpcDxPs.dll"
                               Source="$(var.IncludeDir)\OpcDxPs.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opchda_ps_dll" Guid="B2C3D4E5-0036-4000-9000-000000000036">
+                    <Component Id="sdk_opchda_ps_dll" Guid="$(var.g_opchda_ps_dll)">
                         <File Id="file_sdk_opchda_ps_dll"
                               Name="opchda_ps.dll"
                               Source="$(var.IncludeDir)\opchda_ps.dll"
                               KeyPath="yes" />
                     </Component>
-                    <Component Id="sdk_opcsec_ps_dll" Guid="B2C3D4E5-0037-4000-9000-000000000037">
+                    <Component Id="sdk_opcsec_ps_dll" Guid="$(var.g_opcsec_ps_dll)">
                         <File Id="file_sdk_opcsec_ps_dll"
                               Name="opcsec_ps.dll"
                               Source="$(var.IncludeDir)\opcsec_ps.dll"

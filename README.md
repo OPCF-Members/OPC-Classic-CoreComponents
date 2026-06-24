@@ -12,7 +12,7 @@ and MSI installers. These are the core runtime components that OPC Classic
 - **OpcCategoryManager.exe** — OPC component category registration (x64)
 - **Merge modules (.msm)** — WiX merge modules for embedding in third-party installers
 - **SDK merge modules (.msm)** — headers, IDLs, and reference DLLs for developers
-- **MSI installers (.msi)** — standalone redistributable installers. The x64 MSI
+- **MSI installers (.msi)** — standalone redistributable installers. The x86-x64 MSI
   includes all x86 components and is the only installer needed on 64-bit systems.
 - **Test Applications** — OPC DA 2.05a test server and test client (x86 and x64)
 
