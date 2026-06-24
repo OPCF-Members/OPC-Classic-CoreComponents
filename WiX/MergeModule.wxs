@@ -14,6 +14,22 @@
            OpcCmdPs + OpcDxPs to CommonFilesFolder\OPC Foundation\Bin
       x64: all 8 DLLs + OpcCategoryManager.exe to CommonFiles64Folder\OPC Foundation\Bin
 
+    Component GUIDs: these are the ORIGINAL OPC Foundation (3.00.108) per-file,
+    per-platform component GUIDs, recovered from the legacy merge modules. They
+    are distinct between x86 and x64 (each physical file in each location is a
+    distinct component) which both satisfies ICE08 and preserves shared-component
+    reference counting with the deployed install base. DO NOT make x86 and x64
+    share a GUID, and DO NOT regenerate these - changing them breaks upgrade and
+    cross-product reference counting for everyone who ships these modules.
+
+    Uninstall leftover (x86 in the combined x64 MSI): the 32-bit core DLLs install
+    into SystemFolder, so in the combined x64 MSI WIN64DUALFOLDERS makes Windows
+    Installer resolve those components to Action: Null on uninstall and leave the
+    SysWOW64 copies on disk. This module deliberately keeps plain, standard authoring
+    (no RemoveFile / SharedDLLs custom actions - earlier attempts to force the removal
+    inside the MSI broke clean install/uninstall). Those leftovers are removed on
+    demand by Cleanup-OpcCoreComponents.ps1 instead.
+
     Platform-specific variables (passed via -d):
       BinDir      - path to compiled DLLs
       ModuleGuid  - merge module GUID (x86 vs x64)
@@ -37,7 +53,7 @@
         -->
         <StandardDirectory Id="SystemFolder">
 
-            <Component Id="comp_opccomn_ps" Guid="A1B2C3D4-0001-4000-8000-000000000001">
+            <Component Id="comp_opccomn_ps" Guid="1902BC04-D8CF-67CE-FC28-9C8635C5C2D0">
                 <File Id="file_opccomn_ps"
                       Name="opccomn_ps.dll"
                       Source="$(var.BinDir)\opccomn_ps.dll"
@@ -45,7 +61,7 @@
                       SelfRegCost="1" />
             </Component>
 
-            <Component Id="comp_opcproxy" Guid="A1B2C3D4-0002-4000-8000-000000000002">
+            <Component Id="comp_opcproxy" Guid="3C257474-772A-6CE8-282E-7F4413643C2C">
                 <File Id="file_opcproxy"
                       Name="opcproxy.dll"
                       Source="$(var.BinDir)\opcproxy.dll"
@@ -53,7 +69,7 @@
                       SelfRegCost="1" />
             </Component>
 
-            <Component Id="comp_opc_aeps" Guid="A1B2C3D4-0003-4000-8000-000000000003">
+            <Component Id="comp_opc_aeps" Guid="CD1FB489-1F99-28C2-058C-D7D3E7740F3B">
                 <File Id="file_opc_aeps"
                       Name="opc_aeps.dll"
                       Source="$(var.BinDir)\opc_aeps.dll"
@@ -61,7 +77,7 @@
                       SelfRegCost="1" />
             </Component>
 
-            <Component Id="comp_opcbc_ps" Guid="A1B2C3D4-0004-4000-8000-000000000004">
+            <Component Id="comp_opcbc_ps" Guid="531CABFE-03FC-439E-EB24-DEBB3AD7792B">
                 <File Id="file_opcbc_ps"
                       Name="opcbc_ps.dll"
                       Source="$(var.BinDir)\opcbc_ps.dll"
@@ -69,7 +85,7 @@
                       SelfRegCost="1" />
             </Component>
 
-            <Component Id="comp_opchda_ps" Guid="A1B2C3D4-0007-4000-8000-000000000007">
+            <Component Id="comp_opchda_ps" Guid="69CC9D6E-4B05-F7A4-3D9B-5D771F36DB4E">
                 <File Id="file_opchda_ps"
                       Name="opchda_ps.dll"
                       Source="$(var.BinDir)\opchda_ps.dll"
@@ -77,7 +93,7 @@
                       SelfRegCost="1" />
             </Component>
 
-            <Component Id="comp_opcsec_ps" Guid="A1B2C3D4-0008-4000-8000-000000000008">
+            <Component Id="comp_opcsec_ps" Guid="2F6FBEF4-D9E4-74B8-2B97-CC0C401D052A">
                 <File Id="file_opcsec_ps"
                       Name="opcsec_ps.dll"
                       Source="$(var.BinDir)\opcsec_ps.dll"
@@ -86,7 +102,7 @@
             </Component>
 
             <!-- OPC Server Enumerator (Windows service) -->
-            <Component Id="comp_OpcEnum" Guid="A1B2C3D4-0009-4000-8000-000000000009">
+            <Component Id="comp_OpcEnum" Guid="4695E177-FFA9-6706-9772-290B37AD1438">
                 <File Id="file_OpcEnum"
                       Name="OpcEnum.exe"
                       Source="$(var.BinDir)\OpcEnum.exe"
@@ -102,7 +118,7 @@
             <Directory Id="OPCFoundationFolder" Name="OPC Foundation">
                 <Directory Id="OPCBinFolder" Name="Bin">
 
-                    <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
+                    <Component Id="comp_OpcCmdPs" Guid="B9011D62-73A6-23AF-A2D1-F979014F853B">
                         <File Id="file_OpcCmdPs"
                               Name="OpcCmdPs.dll"
                               Source="$(var.BinDir)\OpcCmdPs.dll"
@@ -110,7 +126,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
+                    <Component Id="comp_OpcDxPs" Guid="8D21BDBF-0135-5954-A9BF-4911EAD28B2B">
                         <File Id="file_OpcDxPs"
                               Name="OpcDxPs.dll"
                               Source="$(var.BinDir)\OpcDxPs.dll"
@@ -138,22 +154,34 @@
                       Impersonate="no"
                       Return="check" />
 
+        <!-- Condition on the OpcEnum COMPONENT action state, not the product
+             install state. "$comp = 3" = component is being installed (local),
+             "$comp = 2" = component is being removed. Conditioning on
+             "NOT Installed" / REMOVE="ALL" assumes the module is always part of the
+             transaction, which is false when it lives in an optional feature: the
+             action would fire while the file is not marked for install/removal,
+             producing error 2753 ("file not marked for installation"). The merge
+             engine appends the module signature to the component reference here, so
+             the merged condition becomes "$comp_OpcEnum.<ModuleSig> = 3". -->
         <InstallExecuteSequence>
             <Custom Action="RegisterOpcEnum" After="InstallFiles"
-                    Condition="NOT Installed" />
+                    Condition="$comp_OpcEnum = 3" />
             <Custom Action="UnregisterOpcEnum" Before="RemoveFiles"
-                    Condition="Installed AND REMOVE=&quot;ALL&quot;" />
+                    Condition="$comp_OpcEnum = 2" />
         </InstallExecuteSequence>
 
         <?else?>
         <!--
             x64: all 8 DLLs + OpcCategoryManager.exe go to Common Files\OPC Foundation\Bin
+            (CommonFiles64Folder is not a system folder, so no SharedDLLs cleanup
+            is needed here - the broken 3.1.1.89 only corrupted the x86 SystemFolder
+            entries.)
         -->
         <StandardDirectory Id="CommonFiles64Folder">
             <Directory Id="OPCFoundationFolder" Name="OPC Foundation">
                 <Directory Id="OPCBinFolder" Name="Bin">
 
-                    <Component Id="comp_opccomn_ps" Guid="A1B2C3D4-0001-4000-8000-000000000001">
+                    <Component Id="comp_opccomn_ps" Guid="3B994FAF-50B0-664A-7327-84C53151DC3A">
                         <File Id="file_opccomn_ps"
                               Name="opccomn_ps.dll"
                               Source="$(var.BinDir)\opccomn_ps.dll"
@@ -161,7 +189,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_opcproxy" Guid="A1B2C3D4-0002-4000-8000-000000000002">
+                    <Component Id="comp_opcproxy" Guid="A930A8B0-CD04-98D6-D8CC-28B2B86C6FEA">
                         <File Id="file_opcproxy"
                               Name="opcproxy.dll"
                               Source="$(var.BinDir)\opcproxy.dll"
@@ -169,7 +197,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_opc_aeps" Guid="A1B2C3D4-0003-4000-8000-000000000003">
+                    <Component Id="comp_opc_aeps" Guid="BF39502E-19E8-0AF9-6A17-33FCB8556882">
                         <File Id="file_opc_aeps"
                               Name="opc_aeps.dll"
                               Source="$(var.BinDir)\opc_aeps.dll"
@@ -177,7 +205,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_opcbc_ps" Guid="A1B2C3D4-0004-4000-8000-000000000004">
+                    <Component Id="comp_opcbc_ps" Guid="8EF6E68D-0D6E-E29C-8521-885632687BCD">
                         <File Id="file_opcbc_ps"
                               Name="opcbc_ps.dll"
                               Source="$(var.BinDir)\opcbc_ps.dll"
@@ -185,7 +213,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_OpcCmdPs" Guid="A1B2C3D4-0005-4000-8000-000000000005">
+                    <Component Id="comp_OpcCmdPs" Guid="2A707F0E-D9FE-9DAE-01F0-C7598CB77D14">
                         <File Id="file_OpcCmdPs"
                               Name="OpcCmdPs.dll"
                               Source="$(var.BinDir)\OpcCmdPs.dll"
@@ -193,7 +221,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_OpcDxPs" Guid="A1B2C3D4-0006-4000-8000-000000000006">
+                    <Component Id="comp_OpcDxPs" Guid="8B1F066C-7B26-4193-526A-96570BF904EE">
                         <File Id="file_OpcDxPs"
                               Name="OpcDxPs.dll"
                               Source="$(var.BinDir)\OpcDxPs.dll"
@@ -201,7 +229,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_opchda_ps" Guid="A1B2C3D4-0007-4000-8000-000000000007">
+                    <Component Id="comp_opchda_ps" Guid="2084B775-59CC-B88F-99BF-B82FEFD263F4">
                         <File Id="file_opchda_ps"
                               Name="opchda_ps.dll"
                               Source="$(var.BinDir)\opchda_ps.dll"
@@ -209,7 +237,7 @@
                               SelfRegCost="1" />
                     </Component>
 
-                    <Component Id="comp_opcsec_ps" Guid="A1B2C3D4-0008-4000-8000-000000000008">
+                    <Component Id="comp_opcsec_ps" Guid="F59E37D7-AA01-9651-122D-AD3ECBCFEBDB">
                         <File Id="file_opcsec_ps"
                               Name="opcsec_ps.dll"
                               Source="$(var.BinDir)\opcsec_ps.dll"
@@ -218,7 +246,7 @@
                     </Component>
 
                     <!-- OPC Category Manager (COM local server for x64 category enumeration) -->
-                    <Component Id="comp_OpcCategoryManager" Guid="A1B2C3D4-000A-4000-8000-000000000010">
+                    <Component Id="comp_OpcCategoryManager" Guid="39F22912-1A3C-C44E-EF19-778291394A31">
                         <File Id="file_OpcCategoryManager"
                               Name="OpcCategoryManager.exe"
                               Source="$(var.BinDir)\OpcCategoryManager.exe"
@@ -231,25 +259,32 @@
         </StandardDirectory>
 
         <!-- OpcCategoryManager: register as COM server on install, unregister on uninstall -->
-        <CustomAction Id="RegisterOpcCategoryManager"
+        <!-- Action IDs kept short: WiX appends the 37-char module signature
+             (".<ModuleGuid>") to each, and ModuleInstallExecuteSequence.Action
+             caps at 64 chars (ICE03). -->
+        <CustomAction Id="RegisterOpcCatMgr"
                       FileRef="file_OpcCategoryManager"
                       ExeCommand="/RegServer"
                       Execute="deferred"
                       Impersonate="no"
                       Return="check" />
 
-        <CustomAction Id="UnregisterOpcCategoryManager"
+        <CustomAction Id="UnregisterOpcCatMgr"
                       FileRef="file_OpcCategoryManager"
                       ExeCommand="/UnRegServer"
                       Execute="deferred"
                       Impersonate="no"
                       Return="check" />
 
+        <!-- Condition on the OpcCategoryManager COMPONENT action state, not the
+             product install state - same fix as OpcEnum (x86) above. "$comp = 3" =
+             being installed, "$comp = 2" = being removed. Avoids error 2753 when the
+             module is in an optional feature that is not part of the transaction. -->
         <InstallExecuteSequence>
-            <Custom Action="RegisterOpcCategoryManager" After="InstallFiles"
-                    Condition="NOT Installed" />
-            <Custom Action="UnregisterOpcCategoryManager" Before="RemoveFiles"
-                    Condition="Installed AND REMOVE=&quot;ALL&quot;" />
+            <Custom Action="RegisterOpcCatMgr" After="InstallFiles"
+                    Condition="$comp_OpcCategoryManager = 3" />
+            <Custom Action="UnregisterOpcCatMgr" Before="RemoveFiles"
+                    Condition="$comp_OpcCategoryManager = 2" />
         </InstallExecuteSequence>
 
         <?endif?>

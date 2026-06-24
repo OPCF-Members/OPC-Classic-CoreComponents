@@ -36,7 +36,12 @@
 
 .NOTES
     Prerequisites:
-      - Visual Studio 2022+ with C++ desktop workload
+      - Visual Studio 2022 or 2026 (any edition: Community/Professional/Enterprise)
+        with the "Desktop development with C++" workload AND the individual
+        component "MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)".
+        The v143 toolset is required for Windows 7 SP1 CRT compatibility;
+        on VS2026 it is NOT installed by default and must be added via the
+        Visual Studio Installer.
       - CMake 3.20+ (included with Visual Studio or install separately)
       - WiX Toolset v4+: dotnet tool install --global wix
       - WiX UI extension: wix extension add WixToolset.UI.wixext
@@ -76,6 +81,88 @@ if (-not $WixCmd) {
 }
 
 $WixDir = Join-Path $ScriptDir 'WiX'
+
+# ---------------------------------------------------------------------------
+# Visual Studio detection
+#
+# Locate any installed VS edition (Community/Professional/Enterprise, 2022 or
+# 2026) that has the v143 toolset. v143 is required for Windows 7 SP1 CRT
+# compatibility; it is not installed by default with VS2026 and must be added
+# as the "MSVC v143 - VS 2022 C++ x64/x86 build tools" individual component.
+# ---------------------------------------------------------------------------
+function Find-VisualStudioWithToolset {
+    param([string]$Toolset = 'v143')
+
+    $vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+    if (-not (Test-Path $vswhere)) {
+        throw "vswhere.exe not found at $vswhere. Install Visual Studio 2022 or 2026 with the 'Desktop development with C++' workload."
+    }
+
+    $allVs = & $vswhere `
+        -products * `
+        -requires Microsoft.VisualStudio.Workload.NativeDesktop `
+        -sort `
+        -format json | ConvertFrom-Json
+
+    if (-not $allVs) {
+        throw "No Visual Studio install with the C++ desktop workload was found. Install VS 2022 or VS 2026 and add the 'Desktop development with C++' workload."
+    }
+
+    foreach ($vs in $allVs) {
+        # The toolset marker is either a .txt (VS2022 and the default toolset
+        # on VS2026) or a .props (older toolsets installed as add-ons on a
+        # newer VS, e.g. v143 added to VS2026).
+        $markerTxt   = Join-Path $vs.installationPath "VC\Auxiliary\Build\Microsoft.VCToolsVersion.$Toolset.default.txt"
+        $markerProps = Join-Path $vs.installationPath "VC\Auxiliary\Build\Microsoft.VCToolsVersion.$Toolset.default.props"
+        if ((Test-Path $markerTxt) -or (Test-Path $markerProps)) {
+            $major = [int]($vs.installationVersion.Split('.')[0])
+            $generator = switch ($major) {
+                17      { 'Visual Studio 17 2022' }
+                18      { 'Visual Studio 18 2026' }
+                default { throw "Unsupported Visual Studio major version $major ($($vs.displayName)). Update build.ps1 to add a generator mapping." }
+            }
+            return [pscustomobject]@{
+                InstallPath = $vs.installationPath
+                DisplayName = $vs.displayName
+                Version     = $vs.installationVersion
+                Generator   = $generator
+                Toolset     = $Toolset
+            }
+        }
+    }
+
+    # No install has the requested toolset — build a diagnostic listing every
+    # detected VS install and which toolsets it does have.
+    $foundList = ($allVs | ForEach-Object {
+        $tools = Join-Path $_.installationPath 'VC\Auxiliary\Build'
+        $available = if (Test-Path $tools) {
+            $names = Get-ChildItem $tools -Filter 'Microsoft.VCToolsVersion.v*.default.*' -ErrorAction SilentlyContinue |
+                Where-Object { $_.Name -match '\.default\.(props|txt)$' } |
+                ForEach-Object { $_.Name -replace '^Microsoft\.VCToolsVersion\.','' -replace '\.default\.(props|txt)$','' } |
+                Sort-Object -Unique
+            if ($names) { $names -join ', ' } else { '(none)' }
+        } else { '(none)' }
+        "  - $($_.displayName) ($($_.installationVersion)) - toolsets: $available"
+    }) -join [Environment]::NewLine
+
+    throw @"
+MSVC $Toolset toolset (VS 2022 C++ x86/x64 build tools) was not found on this
+machine. This toolset is required for Windows 7 SP1 CRT compatibility.
+
+Detected Visual Studio installations:
+$foundList
+
+Fix: open the Visual Studio Installer, click 'Modify' on your VS install,
+switch to 'Individual components', and enable:
+  MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+"@
+}
+
+$VSInfo = Find-VisualStudioWithToolset -Toolset 'v143'
+Write-Host "Visual Studio:   $($VSInfo.DisplayName) ($($VSInfo.Version))"
+Write-Host "Install path:    $($VSInfo.InstallPath)"
+Write-Host "CMake generator: $($VSInfo.Generator)"
+Write-Host "Toolset:         $($VSInfo.Toolset) (VS 2022, Win7 SP1 CRT compatible)"
 
 # ---------------------------------------------------------------------------
 # Code signing detection
@@ -179,9 +266,11 @@ function Build-Platform {
     New-Item -ItemType Directory -Path $BuildDir -Force | Out-Null
     New-Item -ItemType Directory -Path (Join-Path $OutDir "$Arch\bin") -Force | Out-Null
 
-    # Configure (use v143 toolset = VS 2022 for Windows 7 SP1 CRT compatibility)
+    # Configure. Generator and toolset come from the VS detection step at the
+    # top of the script. Toolset is pinned to v143 (VS2022) for Windows 7 SP1
+    # CRT compatibility, regardless of whether the host VS is 2022 or 2026.
     Write-Host "Configuring CMake for $Arch..."
-    $cmakeArgs = @('-S', $ScriptDir, '-B', $BuildDir, '-A', $CmakeArch, '-T', 'v143', "-DCMAKE_INSTALL_PREFIX=$OutDir\$Arch")
+    $cmakeArgs = @('-S', $ScriptDir, '-B', $BuildDir, '-G', $VSInfo.Generator, '-A', $CmakeArch, '-T', $VSInfo.Toolset, "-DCMAKE_GENERATOR_INSTANCE=$($VSInfo.InstallPath)", "-DCMAKE_INSTALL_PREFIX=$OutDir\$Arch")
     if ($SkipTests) {
         $cmakeArgs += '-DOPC_BUILD_TESTS=OFF'
     }
@@ -258,8 +347,11 @@ function Build-Wix {
         $SdkGuid     = 'E68AB8A0-6DF7-4750-8BC1-F14B2064F314'
         $SdkMsmName  = "opc-com-sdk-mergemodule-$FileVersion-x64.msm"
         $UpgradeCode = '282C4D0F-722D-4D30-B09C-61F6D4149DE0'
-        $ProductName = 'OPC Core Components Redistributable (x64)'
-        $MsiName     = "opc-core-components-redistributable-$FileVersion-x64.msi"
+        # Combined installer: delivers BOTH 32-bit and 64-bit components, so it is
+        # named "x86-x64" (not "x64") to make that clear. UpgradeCode stays the x64
+        # code (282C4D0F) - do not change it; upgrades key off the UpgradeCode.
+        $ProductName = 'OPC Core Components Redistributable (x86-x64)'
+        $MsiName     = "opc-core-components-redistributable-$FileVersion-x86-x64.msi"
         $PlatformTag = '(x64)'
     }
 
@@ -325,7 +417,9 @@ function Build-Wix {
         $wixInstallerArgs += 'IncludeTests=1'
     }
 
-    # x64 installer includes x86 merge module and (optionally) x86 test binaries
+    # x64 installer is a combined package: it bundles the x86 merge modules (32-bit
+    # COM support) and optionally the x86 test binaries. The x86 .msm/.msi must have
+    # been built first (build 'both' or x86 before x64).
     if ($Arch -eq 'x64') {
         $MsmFileX86 = Join-Path $MsmDir "opc-com-proxystub-mergemodule-$FileVersion-x86.msm"
         if (-not (Test-Path $MsmFileX86)) {
@@ -419,21 +513,47 @@ try {
     # Remove existing ZIP if present
     if (Test-Path $ZipPath) { Remove-Item $ZipPath -Force }
 
-    # Collect files for the ZIP
-    $zipFiles = @()
-    $zipFiles += @(Get-ChildItem $MsmDir -Include '*.msm','*.msi' -Recurse | Select-Object -ExpandProperty FullName)
+    # Stage the ZIP contents in a clean directory so we control file names (the
+    # end-user redistributable README ships as README.md; the on-demand cleanup
+    # utility and LICENSE are included alongside the .msm/.msi files).
+    $StageDir = Join-Path $OutDir 'zip-staging'
+    if (Test-Path $StageDir) { Remove-Item $StageDir -Recurse -Force }
+    New-Item -ItemType Directory -Path $StageDir -Force | Out-Null
 
-    $readmePath  = Join-Path $ScriptDir 'README.md'
+    # Only the current version's artifacts (out\wix accumulates prior builds; we
+    # must not ship stale .msm/.msi from an earlier version in the redistributable).
+    $msmMsi = @(Get-ChildItem $MsmDir -Include "*-$FileVersion-*.msm","*-$FileVersion-*.msi" -Recurse | Select-Object -ExpandProperty FullName)
+    if ($msmMsi.Count -eq 0) {
+        throw "No $FileVersion .msm/.msi found in $MsmDir."
+    }
+    foreach ($f in $msmMsi) { Copy-Item -LiteralPath $f -Destination $StageDir }
+
+    # End-user README (explains installation + why the cleanup script exists).
+    $redistReadme = Join-Path $ScriptDir 'Redistributable-README.md'
+    if (Test-Path $redistReadme) {
+        Copy-Item -LiteralPath $redistReadme -Destination (Join-Path $StageDir 'README.md')
+    } else {
+        throw "Redistributable README not found: $redistReadme"
+    }
+
+    # On-demand cleanup utility (removes orphaned SysWOW64 DLLs / corrupt SharedDLLs).
+    $cleanupScript = Join-Path $ScriptDir 'Cleanup-OpcCoreComponents.ps1'
+    if (Test-Path $cleanupScript) {
+        Copy-Item -LiteralPath $cleanupScript -Destination $StageDir
+    } else {
+        throw "Cleanup script not found: $cleanupScript"
+    }
+
     $licensePath = Join-Path $ScriptDir 'LICENSE.md'
-    if (Test-Path $readmePath)  { $zipFiles += $readmePath }
-    if (Test-Path $licensePath) { $zipFiles += $licensePath }
+    if (Test-Path $licensePath) { Copy-Item -LiteralPath $licensePath -Destination $StageDir }
 
-    if ($zipFiles.Count -eq 0) {
+    $stagedFiles = @(Get-ChildItem $StageDir -File | Select-Object -ExpandProperty FullName)
+    if ($stagedFiles.Count -eq 0) {
         throw "No files found to include in redistributable ZIP."
     }
 
-    Write-Host "Creating $ZipName with $($zipFiles.Count) file(s)..."
-    Compress-Archive -Path $zipFiles -DestinationPath $ZipPath -CompressionLevel Optimal
+    Write-Host "Creating $ZipName with $($stagedFiles.Count) file(s)..."
+    Compress-Archive -Path $stagedFiles -DestinationPath $ZipPath -CompressionLevel Optimal
     Write-Host "  ZIP: $ZipPath"
 
     Write-Host ''

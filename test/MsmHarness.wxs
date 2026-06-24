@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    OPC Merge Module Test Harness
+    ============================================================================
+    A minimal consumer MSI used to exercise the OPC merge modules (.msm) in
+    ISOLATION from the production installer (Installer.wxs) - no UI, no upgrade
+    logic, no combined-x64 bundling. Its only job is to let you install and
+    uninstall the merge modules on a clean VM and confirm there are no leftover
+    files, services, or COM registration, and no custom-action errors.
+
+    Both merge modules are placed in their OWN optional feature (Level="2"), so
+    nothing installs at the default INSTALLLEVEL=1. Drive the scenarios from the
+    command line (see Run-HarnessTest.ps1 / README.md):
+
+      Nothing optional :  msiexec /i <harness>.msi /qn
+      Everything       :  msiexec /i <harness>.msi ADDLOCAL=ProxyStub,Sdk /qn
+      Proxy/stub only  :  msiexec /i <harness>.msi ADDLOCAL=ProxyStub /qn
+      SDK only         :  msiexec /i <harness>.msi ADDLOCAL=Sdk /qn   <- the
+                          exact case that triggered error 2753: another feature
+                          installs while the proxy/stub (OpcEnum / OpcCategory-
+                          Manager) feature is NOT in the transaction.
+
+    Variables (passed via -d, see Build-MsmHarness.ps1):
+      Platform       - x86 or x64
+      Version        - product version string
+      UpgradeCode    - per-arch UpgradeCode for the harness product
+      ProxyStubMsm   - path to the proxy/stub merge module
+      SdkMsm         - path to the SDK merge module
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+    <Package Name="OPC Merge Module Test Harness ($(var.Platform))"
+             Manufacturer="OPC Foundation"
+             Version="$(var.Version)"
+             UpgradeCode="$(var.UpgradeCode)"
+             Compressed="yes"
+             InstallerVersion="500"
+             Scope="perMachine">
+
+        <SummaryInformation Description="OPC Merge Module Test Harness ($(var.Platform))"
+                            Manufacturer="OPC Foundation" />
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+
+        <MediaTemplate EmbedCab="yes" />
+
+        <StandardDirectory Id="TARGETDIR">
+            <Merge Id="ProxyStub" Language="1033" SourceFile="$(var.ProxyStubMsm)" DiskId="1" />
+            <Merge Id="Sdk"       Language="1033" SourceFile="$(var.SdkMsm)"       DiskId="1" />
+        </StandardDirectory>
+
+        <!-- Level="2" => excluded at default INSTALLLEVEL=1; select with ADDLOCAL. -->
+        <Feature Id="ProxyStub"
+                 Title="Proxy/Stub Runtime"
+                 Description="The COM proxy/stub DLLs plus OpcEnum (x86) / OpcCategoryManager (x64)."
+                 Level="2"
+                 AllowAbsent="yes">
+            <MergeRef Id="ProxyStub" />
+        </Feature>
+
+        <Feature Id="Sdk"
+                 Title="SDK (headers / IDL / reference DLLs)"
+                 Description="Development files. Installing this WITHOUT ProxyStub is the error-2753 regression case."
+                 Level="2"
+                 AllowAbsent="yes">
+            <MergeRef Id="Sdk" />
+        </Feature>
+
+    </Package>
+
+</Wix>
