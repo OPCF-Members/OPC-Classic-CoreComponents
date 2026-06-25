@@ -213,7 +213,6 @@ $Build = [int](Get-Content $BuildFile -Raw).Trim() + 1
 Set-Content -Path $BuildFile -Value $Build -NoNewline
 
 $Version     = "$Major.$Minor.$Revision.$Build"
-$FileVersion = "$Major.$Minor.$Revision"
 $CopyrightYear = (Get-Date).Year
 
 # Generate version.h
@@ -333,25 +332,25 @@ function Build-Wix {
     # Platform-specific IDs and filenames
     if ($Arch -eq 'x86') {
         $ModuleGuid  = 'E25DF0F2-0F29-47E8-8537-265285ED9757'
-        $MsmName     = "opc-com-proxystub-mergemodule-$FileVersion-x86.msm"
+        $MsmName     = "opc-com-proxystub-mergemodule-$Version-x86.msm"
         $SdkGuid     = 'E25DF0F3-0F29-47E8-8537-265285ED9758'
-        $SdkMsmName  = "opc-com-sdk-mergemodule-$FileVersion-x86.msm"
+        $SdkMsmName  = "opc-com-sdk-mergemodule-$Version-x86.msm"
         $UpgradeCode = 'ABE618F1-0CCE-4F84-9124-65DB0EF16E00'
         $ProductName = 'OPC Core Components Redistributable (x86)'
-        $MsiName     = "opc-core-components-redistributable-$FileVersion-x86.msi"
+        $MsiName     = "opc-core-components-redistributable-$Version-x86.msi"
         $PlatformTag = '(x86)'
     }
     else {
         $ModuleGuid  = 'E68AB89F-6DF7-4750-8BC1-F14B2064F313'
-        $MsmName     = "opc-com-proxystub-mergemodule-$FileVersion-x64.msm"
+        $MsmName     = "opc-com-proxystub-mergemodule-$Version-x64.msm"
         $SdkGuid     = 'E68AB8A0-6DF7-4750-8BC1-F14B2064F314'
-        $SdkMsmName  = "opc-com-sdk-mergemodule-$FileVersion-x64.msm"
+        $SdkMsmName  = "opc-com-sdk-mergemodule-$Version-x64.msm"
         $UpgradeCode = '282C4D0F-722D-4D30-B09C-61F6D4149DE0'
         # Combined installer: delivers BOTH 32-bit and 64-bit components, so it is
         # named "x86-x64" (not "x64") to make that clear. UpgradeCode stays the x64
         # code (282C4D0F) - do not change it; upgrades key off the UpgradeCode.
         $ProductName = 'OPC Core Components Redistributable (x86-x64)'
-        $MsiName     = "opc-core-components-redistributable-$FileVersion-x86-x64.msi"
+        $MsiName     = "opc-core-components-redistributable-$Version-x86-x64.msi"
         $PlatformTag = '(x64)'
     }
 
@@ -421,11 +420,11 @@ function Build-Wix {
     # COM support) and optionally the x86 test binaries. The x86 .msm/.msi must have
     # been built first (build 'both' or x86 before x64).
     if ($Arch -eq 'x64') {
-        $MsmFileX86 = Join-Path $MsmDir "opc-com-proxystub-mergemodule-$FileVersion-x86.msm"
+        $MsmFileX86 = Join-Path $MsmDir "opc-com-proxystub-mergemodule-$Version-x86.msm"
         if (-not (Test-Path $MsmFileX86)) {
             throw "x86 merge module not found: $MsmFileX86. Build x86 platform first."
         }
-        $SdkMsmFileX86 = Join-Path $MsmDir "opc-com-sdk-mergemodule-$FileVersion-x86.msm"
+        $SdkMsmFileX86 = Join-Path $MsmDir "opc-com-sdk-mergemodule-$Version-x86.msm"
         if (-not (Test-Path $SdkMsmFileX86)) {
             throw "x86 SDK merge module not found: $SdkMsmFileX86. Build x86 platform first."
         }
@@ -507,7 +506,7 @@ try {
     $DistDir = Join-Path $ScriptDir 'dist'
     New-Item -ItemType Directory -Path $DistDir -Force | Out-Null
 
-    $ZipName = "OPC-Core-Components-Redistributables-$Major.$Minor.$Revision.zip"
+    $ZipName = "OPC-Core-Components-Redistributables-$Version.zip"
     $ZipPath = Join-Path $DistDir $ZipName
 
     # Remove existing ZIP if present
@@ -522,9 +521,9 @@ try {
 
     # Only the current version's artifacts (out\wix accumulates prior builds; we
     # must not ship stale .msm/.msi from an earlier version in the redistributable).
-    $msmMsi = @(Get-ChildItem $MsmDir -Include "*-$FileVersion-*.msm","*-$FileVersion-*.msi" -Recurse | Select-Object -ExpandProperty FullName)
+    $msmMsi = @(Get-ChildItem $MsmDir -Include "*-$Version-*.msm","*-$Version-*.msi" -Recurse | Select-Object -ExpandProperty FullName)
     if ($msmMsi.Count -eq 0) {
-        throw "No $FileVersion .msm/.msi found in $MsmDir."
+        throw "No $Version .msm/.msi found in $MsmDir."
     }
     foreach ($f in $msmMsi) { Copy-Item -LiteralPath $f -Destination $StageDir }
 
