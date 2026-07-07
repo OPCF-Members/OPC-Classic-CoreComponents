@@ -1,5 +1,5 @@
 /* ========================================================================
- * Copyright (c) 2002-2026 OPC Foundation. All rights reserved.
+ * Copyright (c) 2005-2026, OPC Federation AISBL, All rights reserved.
  *
  * OPC Foundation MIT License 1.00
  * 
@@ -219,4 +219,4 @@ else \
 #define READ_ELEMENT_EX(xName, xValue, xAction) if (!OpcXml::ReadXml(cElement.GetChild(xName), xValue)) {xAction;}
 #define WRITE_ELEMENT_EX(xName, xValue, xAction) if (!OpcXml::WriteXml(cElement.AddChild(xName), xValue)) {xAction;}
 
-#endif // _COpcXmlElement_H_ 
+#endif // _COpcXmlElement_H_

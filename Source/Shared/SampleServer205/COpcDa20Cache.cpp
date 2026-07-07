@@ -1,5 +1,5 @@
 /* ========================================================================
- * Copyright (c) 2002-2026 OPC Foundation. All rights reserved.
+ * Copyright (c) 2005-2026, OPC Federation AISBL, All rights reserved.
  *
  * OPC Foundation MIT License 1.00
  * 
@@ -203,4 +203,3 @@ bool COpcDa20Cache::Load(COpcXmlElement& cRoot)
 
 	return true;
 }
-
