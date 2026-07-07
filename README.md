@@ -4,6 +4,10 @@ Build system for the OPC Classic COM proxy/stub DLLs, server enumerator,
 and MSI installers. These are the core runtime components that OPC Classic
 (COM/DCOM) clients and servers need to communicate.
 
+## Pre-built Binaries
+
+While the code in this repo covered under the MIT [license](https://opcfoundation.org/license/mit.html), it is recommended that vendors use the [pre-built installers](https://opcfoundation.org/developer-tools/samples-and-tools-classic/core-components/) signed by the OPC Foundation.  
+
 ## What's in this repo
 
 - **8 proxy/stub DLLs** — COM marshalling for OPC DA, A&E, HDA, Batch,
