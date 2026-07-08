@@ -4,9 +4,22 @@ Build system for the OPC Classic COM proxy/stub DLLs, server enumerator,
 and MSI installers. These are the core runtime components that OPC Classic
 (COM/DCOM) clients and servers need to communicate.
 
-## Pre-built Binaries
+## ⚠️ CRITICAL NOTICE & DISCLAIMER
 
-While the code in this repo covered under the MIT [license](https://opcfoundation.org/license/mit.html), it is recommended that vendors use the [pre-built installers](https://opcfoundation.org/developer-tools/samples-and-tools-classic/core-components/) signed by the OPC Foundation.  
+### 1. Legacy and End-of-Life (EOL) Status
+**This codebase is strictly legacy, entirely unmaintained, and has reached its final End-of-Life (EOL).** It will not receive any feature updates, maintenance, compatibility patches, or security vulnerability fixes. 
+
+### 2. Regulatory Compliance & Non-Commercial Safe Harbor
+This repository is made available strictly as a public, open-source archive for historical reference, research, and educational purposes. 
+* **No Commercial Activity:** This software is provided entirely free of charge, outside the course of any commercial activity, and without any commercial support, monetization, or intent to place it on any commercial market.
+* **User Responsibility:** Any downstream integration, deployment, or utilization of this code is performed entirely at the user's own risk. The user assumes full responsibility for ensuring compliance with all applicable cybersecurity regulations, including but not limited to the EU Cyber Resilience Act (CRA).
+
+### 3. Limitation of Liability (MIT License Affirmation)
+AS PER THE MIT LICENSE UNDER WHICH THIS CODE IS DISTRIBUTED, THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS, COPYRIGHT HOLDERS, OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+### 4. Pre-built Binaries
+Due to the limitations of COM/DCOM the OPC Foundation provides [pre-built installers](https://opcfoundation.org/developer-tools/samples-and-tools-classic/core-components/) signed by the OPC Foundation. 
+The binaries are built with the scripts published in this repository and any user can replicate the binaries themselves.
 
 ## What's in this repo
 
