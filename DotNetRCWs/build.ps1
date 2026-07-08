@@ -28,8 +28,12 @@
       NuGetKeyVaultSignTool (both installed as global tools on demand).
 
 .PARAMETER Version
-    NuGet package version (e.g. 2.1.131). Defaults to the value in version.txt,
-    or 2.1.0 if that file is absent.
+    NuGet package version (e.g. 2.2.131). When not supplied it is composed from
+    major.minor in version.txt plus the build number in build.txt
+    (version.txt=2.2 + build.txt=131 -> 2.2.131). FileVersion / ProductVersion is
+    that value padded to four fields (2.2.131.0). Edit build.txt by hand before
+    building to stamp a new build; the strong-name AssemblyVersion stays pinned
+    at 2.0.0.0.
 
 .PARAMETER Configuration
     Build configuration: Release (default) or Debug.
@@ -67,22 +71,44 @@ $solution = Join-Path $root 'DotNetRCWs.slnx'
 if (-not $OutDir) { $OutDir = Join-Path $root 'dist' }
 
 # --- Resolve version -------------------------------------------------------
+# Build number = patch field, read from build.txt. Unlike the native build's
+# build.txt this is NOT auto-incremented; edit it by hand before building to
+# stamp a new build. The strong-name AssemblyVersion stays pinned at 2.0.0.0.
+$buildFile = Join-Path $root 'build.txt'
+if (Test-Path $buildFile) {
+    $build = (Get-Content $buildFile -Raw).Trim()
+} else {
+    $build = '0'
+}
+if ($build -notmatch '^\d+$') {
+    throw "build.txt must contain a single integer build number (found '$build')."
+}
+
+# Package version = major.minor (from version.txt) + build (from build.txt),
+# e.g. version.txt=2.2 (or 2.2.0) + build.txt=131 -> 2.2.131. Only the first two
+# fields of version.txt are used; any patch there is replaced by build.txt.
 if (-not $Version) {
     $versionFile = Join-Path $root 'version.txt'
     if (Test-Path $versionFile) {
-        $Version = (Get-Content $versionFile -Raw).Trim()
+        $baseVersion = (Get-Content $versionFile -Raw).Trim()
     } else {
-        $Version = '2.1.0'
+        $baseVersion = '2.1'
     }
+    $vparts = ($baseVersion -split '-')[0] -split '\.'
+    $major  = $vparts[0]
+    $minor  = if ($vparts.Count -ge 2) { $vparts[1] } else { '0' }
+    $Version = "$major.$minor.$build"
 }
 
-# 4-part numeric FileVersion from the package version (drop any -prerelease tag).
+# 4-part numeric FileVersion from the package version (drop any -prerelease tag),
+# padded with trailing zeros -> e.g. 2.2.131 -> 2.2.131.0.
 $numeric = ($Version -split '-')[0]
 $parts = @($numeric -split '\.') + @('0', '0', '0', '0')
 $fileVersion = ($parts[0..3]) -join '.'
 
 Write-Host "==> OPC Classic .NET API build" -ForegroundColor Cyan
 Write-Host "    Version       : $Version"
+Write-Host "    File version  : $fileVersion"
 Write-Host "    Configuration : $Configuration"
 Write-Host "    Output        : $OutDir"
 
@@ -92,7 +118,7 @@ if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
 }
 Write-Host "    dotnet SDK    : $(dotnet --version)"
 
-$msbuildProps = @("-p:Version=$Version", "-p:FileVersion=$fileVersion")
+$msbuildProps = @("-p:Version=$Version", "-p:FileVersion=$fileVersion", "-p:InformationalVersion=$fileVersion")
 
 # --- Strong-name key (from signing-key.ps1 via $env:SigningKeyFile) ---------
 if ($env:SigningKeyFile) {
@@ -207,6 +233,32 @@ if ($CanSign) {
     }
 }
 
+# --- Assemble redistributable zip -------------------------------------------
+# Self-contained bundle: the .nupkg files under packages\, the OPC Foundation
+# license as LICENSE.md, the consumer README, and a NuGet.Config whose local
+# source is repointed from .\dist to the bundled .\packages folder.
+Write-Host "==> Assembling redistributable zip" -ForegroundColor Cyan
+$stage = Join-Path $OutDir 'redistributable'
+if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
+$stagePackages = Join-Path $stage 'packages'
+New-Item -ItemType Directory -Force -Path $stagePackages | Out-Null
+
+Get-ChildItem -Path $OutDir -Filter '*.nupkg' | Copy-Item -Destination $stagePackages
+
+Copy-Item (Join-Path $root 'nuget\redistributables-license.txt') (Join-Path $stage 'LICENSE.md')
+Copy-Item (Join-Path $root 'redistributable-README.md')          (Join-Path $stage 'redistributable-README.md')
+
+# NuGet.Config with the local source pointed at the bundled packages folder.
+$nugetConfig = Get-Content (Join-Path $root 'NuGet.Config') -Raw
+$nugetConfig = $nugetConfig -replace '\.\\dist', '.\packages'
+Set-Content -Path (Join-Path $stage 'NuGet.Config') -Value $nugetConfig -Encoding utf8
+
+$zipPath = Join-Path $OutDir "OpcNetApi-redistributable-$Version.zip"
+if (Test-Path $zipPath) { Remove-Item $zipPath -Force }
+Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $zipPath
+Remove-Item $stage -Recurse -Force
+
 Write-Host ""
-Write-Host "==> Done. Packages in $OutDir" -ForegroundColor Green
+Write-Host "==> Done. Output in $OutDir" -ForegroundColor Green
 Get-ChildItem -Path $OutDir -Filter *.nupkg | Sort-Object Name | ForEach-Object { Write-Host "    $($_.Name)" }
+Write-Host "    $(Split-Path $zipPath -Leaf)" -ForegroundColor Green

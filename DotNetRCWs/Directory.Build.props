@@ -22,10 +22,20 @@
       Package version. Assembly identity is pinned to 2.0.0.0 so strong-name
       binding stays stable across package releases; FileVersion/package Version
       can float and are overridable from the command line (-p:Version=...).
+      build.ps1 composes the package version as major.minor (version.txt) +
+      build (build.txt) -> 2.2.131, and stamps FileVersion/InformationalVersion
+      as that value padded to four fields (2.2.131.0).
     -->
     <Version>2.1.0</Version>
     <FileVersion>2.1.0.0</FileVersion>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
+
+    <!--
+      Don't append the git commit hash (+<sha>) to AssemblyInformationalVersion.
+      Since .NET SDK 8 the built-in SourceLink integration does this by default,
+      which is what turned "Product version" into 2.1.0+<hash>.
+    -->
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 
     <!-- Package metadata (dotnet pack). -->
     <PackageProjectUrl>https://opcfoundation.org/developer-tools/developer-kits-classic/net-api-redistributables/</PackageProjectUrl>
