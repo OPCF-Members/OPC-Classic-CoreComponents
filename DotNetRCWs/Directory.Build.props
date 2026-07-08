@@ -1,0 +1,58 @@
+<Project>
+
+  <!--
+    Shared properties for all OPC Classic .NET API (DotNetRCWs) projects.
+    Imported automatically by every .csproj under this directory.
+  -->
+
+  <PropertyGroup>
+    <!-- Target every framework the packages ship for, including .NET 10. -->
+    <OpcTargetFrameworks>netstandard2.0;netstandard2.1;net46;net6.0-windows;net8.0-windows;net10.0-windows</OpcTargetFrameworks>
+
+    <Company>OPC Foundation</Company>
+    <Product>OPC Classic .NET API</Product>
+    <Authors>OPC Foundation</Authors>
+    <Copyright>Copyright © 2003-2026 OPC Foundation</Copyright>
+
+    <!-- Strong-name signing (placeholder key by default; supply the real key to sign). -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)Keys\OPC Key Pair.placeholder.snk</AssemblyOriginatorKeyFile>
+
+    <!--
+      Package version. Assembly identity is pinned to 2.0.0.0 so strong-name
+      binding stays stable across package releases; FileVersion/package Version
+      can float and are overridable from the command line (-p:Version=...).
+    -->
+    <Version>2.1.0</Version>
+    <FileVersion>2.1.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+
+    <!-- Package metadata (dotnet pack). -->
+    <PackageProjectUrl>https://opcfoundation.org/developer-tools/developer-kits-classic/net-api-redistributables/</PackageProjectUrl>
+    <PackageIcon>favicon.png</PackageIcon>
+    <PackageLicenseFile>redistributables-license.txt</PackageLicenseFile>
+    <PackageTags>OPC COM OPC-Classic dotnet net</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- Suppress obsolete-API warnings this legacy code intentionally uses. -->
+    <NoWarn>$(NoWarn);SYSLIB0012;SYSLIB0051</NoWarn>
+  </PropertyGroup>
+
+  <!-- Package icon + license, embedded in every produced .nupkg. -->
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)nuget\favicon.png" Pack="true" PackagePath="" Visible="false" />
+    <None Include="$(MSBuildThisFileDirectory)nuget\redistributables-license.txt" Pack="true" PackagePath="" Visible="false" />
+  </ItemGroup>
+
+  <!--
+    Reference assemblies for the net46 target. The machine building this only
+    needs the .NET SDK; the .NET Framework targeting pack does not have to be
+    installed. This package is a no-op for the .NET Standard / .NET targets.
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

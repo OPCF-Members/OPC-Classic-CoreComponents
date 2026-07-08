@@ -1,0 +1,8 @@
+# .NET build outputs
+bin/
+obj/
+dist/
+
+# NuGet
+*.nupkg
+*.snupkg

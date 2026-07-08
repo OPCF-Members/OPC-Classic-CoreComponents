@@ -1,0 +1,2 @@
+# The package icon is intentionally tracked despite the repo-wide *.png ignore.
+!favicon.png
