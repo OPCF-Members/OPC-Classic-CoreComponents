@@ -1,27 +1,7 @@
-//============================================================================
-// TITLE: OpcCom.Hda.Server.cs
-//
-// CONTENTS:
-// 
-// An in-process wrapper for a remote OPC COM-HDA 1.20 server.
-//
-// (c) Copyright 2003-2004 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Date       By    Notes
-// ---------- ---   -----
-// 2003/12/31 RSA   Initial implementation.
-// 2004/11/22 RSA   Removed support for writing HDA quality values.
+/* ========================================================================
+ * SPDX-FileCopyrightText: Copyright (c) 2005-2026, OPC Federation AISBL
+ * SPDX-License-Identifier: MIT
+ * ======================================================================*/
 
 using System;
 using System.Xml;

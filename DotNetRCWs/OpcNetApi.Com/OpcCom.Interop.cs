@@ -1,28 +1,7 @@
-//============================================================================
-// TITLE: Common.cs
-//
-// CONTENTS:
-// 
-// Defines wrappers for basic WIN32/OLE32 API functions.
-//
-// (c) Copyright 2002-2005 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Date       By    Notes
-// ---------- ---   -----
-// 2002/11/16 RSA   First release.
-// 2003/09/29 RSA   Fixed a security bug when connecting to COM servers on Windows CE devices.
-// 2005/01/26 RSA   CreateInstance now allows in-proc servers to be loaded if the hostname is "localhost".
+/* ========================================================================
+ * SPDX-FileCopyrightText: Copyright (c) 2005-2026, OPC Federation AISBL
+ * SPDX-License-Identifier: MIT
+ * ======================================================================*/
 
 #pragma warning disable 0618
 

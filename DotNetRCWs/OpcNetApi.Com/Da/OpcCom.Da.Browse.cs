@@ -1,26 +1,7 @@
-//============================================================================
-// TITLE: Browse.cs
-//
-// CONTENTS:
-// 
-// Specializations for COM-DA of classes used to browse the server address space.
-//
-// (c) Copyright 2003 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Date       By    Notes
-// ---------- ---   -----
-// 2003/04/05 RSA   Initial implementation.
+/* ========================================================================
+ * SPDX-FileCopyrightText: Copyright (c) 2005-2026, OPC Federation AISBL
+ * SPDX-License-Identifier: MIT
+ * ======================================================================*/
 
 using System;
 using System.Xml;

@@ -1,26 +1,7 @@
-//============================================================================
-// TITLE: Opc.Ae.ISubscription.cs
-//
-// CONTENTS:
-// 
-// An interface to an object which implements a AE event subscription.
-//
-// (c) Copyright 2003-2004 The OPC Foundation
-// ALL RIGHTS RESERVED.
-//
-// DISCLAIMER:
-//  This code is provided by the OPC Foundation solely to assist in 
-//  understanding and use of the appropriate OPC Specification(s) and may be 
-//  used as set forth in the License Grant section of the OPC Specification.
-//  This code is provided as-is and without warranty or support of any sort
-//  and is subject to the Warranty and Liability Disclaimers which appear
-//  in the printed OPC Specification.
-//
-// MODIFICATION LOG:
-//
-// Aete       By    Notes
-// ---------- ---   -----
-// 2004/11/08 RSA   Initial implementation.
+/* ========================================================================
+ * SPDX-FileCopyrightText: Copyright (c) 2005-2026, OPC Federation AISBL
+ * SPDX-License-Identifier: MIT
+ * ======================================================================*/
 
 using System;
 using System.Xml;
@@ -540,17 +521,17 @@ namespace Opc.Ae
 	public enum ChangeMask
 	{
 		/// <summary>
-		/// The condition’s active state has changed.
+		/// The conditionï¿½s active state has changed.
 		/// </summary>
 		ActiveState = 0x0001,
 
 		/// <summary>
-		/// The condition’s acknowledgment state has changed.
+		/// The conditionï¿½s acknowledgment state has changed.
 		/// </summary>
 		AcknowledgeState = 0x0002,
 
 		/// <summary>
-		/// The condition’s enabled state has changed.
+		/// The conditionï¿½s enabled state has changed.
 		/// </summary>
 		EnableState = 0x0004,
 
